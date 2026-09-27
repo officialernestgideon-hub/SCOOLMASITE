@@ -1,0 +1,978 @@
+.search-page {
+min-height: calc(100vh - 72px);
+background: var(--surface);
+}
+
+/* ================================
+SEARCH HERO
+================================ */
+
+.search-hero {
+position: relative;
+overflow: hidden;
+background: linear-gradient(
+120deg,
+var(--purple-deep),
+var(--purple-dark),
+var(--purple)
+);
+color: white;
+}
+
+.search-hero-pattern {
+position: absolute;
+inset: 0;
+pointer-events: none;
+background:
+radial-gradient(
+circle at 85% 20%,
+rgba(255, 255, 255, 0.11),
+transparent 25%
+),
+radial-gradient(
+circle at 10% 90%,
+rgba(255, 255, 255, 0.08),
+transparent 28%
+);
+}
+
+.search-hero-pattern::before {
+content: "";
+position: absolute;
+width: 430px;
+height: 430px;
+top: -260px;
+right: -120px;
+border: 1px solid rgba(255, 255, 255, 0.08);
+border-radius: 50%;
+}
+
+.search-hero-pattern::after {
+content: "";
+position: absolute;
+width: 280px;
+height: 280px;
+bottom: -200px;
+left: -90px;
+border: 1px solid rgba(255, 255, 255, 0.08);
+border-radius: 50%;
+}
+
+.search-hero-content {
+position: relative;
+z-index: 2;
+width: min(calc(100% - 32px), var(--container));
+margin: 0 auto;
+padding: 65px 0 70px;
+}
+
+.search-eyebrow {
+display: flex;
+align-items: center;
+gap: 7px;
+margin: 0 0 10px;
+color: #d9c7ff;
+font-size: 10px;
+font-weight: 800;
+letter-spacing: 1.6px;
+}
+
+.search-hero h1 {
+max-width: 720px;
+margin: 0;
+color: white;
+font-size: clamp(36px, 6vw, 58px);
+line-height: 1.06;
+letter-spacing: -2px;
+}
+
+.search-hero-content > p:not(.search-eyebrow) {
+max-width: 620px;
+margin: 15px 0 0;
+color: #e8dcf7;
+font-size: 14px;
+line-height: 1.7;
+}
+
+/* ================================
+SEARCH FORM
+================================ */
+
+.discovery-search-form {
+width: min(100%, 900px);
+margin-top: 28px;
+padding: 7px;
+border-radius: 15px;
+background: white;
+box-shadow: 0 18px 45px rgba(24, 7, 44, 0.24);
+}
+
+.discovery-search-main {
+display: flex;
+align-items: center;
+min-height: 52px;
+border-bottom: 1px solid var(--border);
+}
+
+.discovery-search-main > i {
+width: 45px;
+flex-shrink: 0;
+display: grid;
+place-items: center;
+color: var(--purple);
+font-size: 16px;
+}
+
+.discovery-search-main input {
+width: 100%;
+min-width: 0;
+height: 50px;
+border: 0;
+outline: 0;
+background: transparent;
+color: var(--ink);
+font-family: inherit;
+font-size: 13px;
+}
+
+.discovery-search-main input::placeholder {
+color: #9c96a5;
+}
+
+.discovery-search-main button {
+min-width: 95px;
+height: 38px;
+margin-right: 6px;
+padding: 0 15px;
+border: 0;
+border-radius: 8px;
+background: var(--purple);
+color: white;
+font-family: inherit;
+font-size: 10px;
+font-weight: 800;
+cursor: pointer;
+}
+
+.discovery-search-main button:hover {
+background: var(--purple-dark);
+}
+
+/* ================================
+FILTERS
+================================ */
+
+.discovery-filters {
+display: grid;
+grid-template-columns: repeat(3, 1fr) auto;
+gap: 9px;
+padding: 11px 4px 4px;
+}
+
+.discovery-filter {
+min-width: 0;
+}
+
+.discovery-filter label {
+display: flex;
+align-items: center;
+gap: 5px;
+margin: 0 0 5px;
+color: var(--muted);
+font-size: 9px;
+font-weight: 750;
+}
+
+.discovery-filter label i {
+color: var(--purple);
+}
+
+.discovery-filter select {
+width: 100%;
+height: 38px;
+padding: 0 9px;
+border: 1px solid var(--border);
+border-radius: 8px;
+outline: 0;
+background: white;
+color: var(--ink);
+font-family: inherit;
+font-size: 10px;
+cursor: pointer;
+}
+
+.discovery-filter select:focus {
+border-color: var(--purple);
+}
+
+.discovery-filter-button {
+align-self: end;
+min-height: 38px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+padding: 0 13px;
+border: 0;
+border-radius: 8px;
+background: var(--ink);
+color: white;
+font-family: inherit;
+font-size: 9px;
+font-weight: 800;
+white-space: nowrap;
+cursor: pointer;
+}
+
+.discovery-filter-button:hover {
+background: var(--purple-dark);
+}
+
+/* ================================
+RESULTS
+================================ */
+
+.search-results-section {
+width: min(calc(100% - 32px), var(--container));
+margin: 0 auto;
+padding: 60px 0 85px;
+}
+
+.search-results-header {
+margin-bottom: 25px;
+}
+
+.search-section-eyebrow {
+display: flex;
+align-items: center;
+gap: 7px;
+margin: 0 0 7px;
+color: var(--purple);
+font-size: 10px;
+font-weight: 800;
+letter-spacing: 1.4px;
+}
+
+.search-results-header h2 {
+margin: 0;
+color: var(--ink);
+font-size: 30px;
+letter-spacing: -0.8px;
+}
+
+.search-results-header > div > p:last-child {
+margin: 7px 0 0;
+color: var(--muted);
+font-size: 11px;
+}
+
+.search-results-header strong {
+color: var(--ink);
+}
+
+/* ================================
+RESULT COLUMNS
+================================ */
+
+.search-result-columns {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.result-group {
+min-width: 0;
+padding: 20px;
+background: white;
+border: 1px solid var(--border);
+border-radius: var(--radius-md);
+box-shadow: var(--shadow-sm);
+}
+
+.result-group-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+padding-bottom: 16px;
+border-bottom: 1px solid var(--border);
+}
+
+.result-group-header > div {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.result-group-icon {
+width: 37px;
+height: 37px;
+flex-shrink: 0;
+display: grid;
+place-items: center;
+border-radius: 10px;
+background: var(--purple-soft);
+color: var(--purple);
+font-size: 14px;
+}
+
+.admission-icon {
+background: #f4f0ff;
+}
+
+.result-group-header h3 {
+margin: 0;
+color: var(--ink);
+font-size: 14px;
+}
+
+.result-group-header p {
+margin: 3px 0 0;
+color: var(--muted);
+font-size: 9px;
+}
+
+.result-count {
+min-width: 27px;
+height: 27px;
+display: grid;
+place-items: center;
+border-radius: 50%;
+background: var(--purple-soft);
+color: var(--purple);
+font-size: 9px;
+font-weight: 800;
+}
+
+/* ================================
+UNIVERSITY RESULTS
+================================ */
+
+.search-university-list {
+display: grid;
+gap: 8px;
+margin-top: 13px;
+}
+
+.search-university-card {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 11px;
+border: 1px solid transparent;
+border-radius: 10px;
+color: inherit;
+transition:
+background 0.2s ease,
+border-color 0.2s ease;
+}
+
+.search-university-card:hover {
+background: var(--purple-soft);
+border-color: #e0d6f1;
+}
+
+.search-university-logo {
+width: 43px;
+height: 43px;
+flex-shrink: 0;
+display: grid;
+place-items: center;
+overflow: hidden;
+border: 1px solid var(--border);
+border-radius: 10px;
+background: white;
+color: var(--purple);
+}
+
+.search-university-logo img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+
+.search-university-info {
+min-width: 0;
+flex: 1;
+}
+
+.search-university-title {
+display: flex;
+align-items: center;
+gap: 6px;
+flex-wrap: wrap;
+}
+
+.search-university-title h4 {
+margin: 0;
+color: var(--ink);
+font-size: 11px;
+line-height: 1.4;
+}
+
+.search-verified {
+display: inline-flex;
+align-items: center;
+gap: 3px;
+color: var(--success);
+font-size: 7px;
+font-weight: 800;
+}
+
+.search-short-name {
+display: block;
+margin-top: 2px;
+color: var(--purple);
+font-size: 8px;
+font-weight: 750;
+}
+
+.search-location {
+display: flex;
+align-items: center;
+gap: 5px;
+margin-top: 4px;
+color: var(--muted);
+font-size: 8px;
+}
+
+.search-location i {
+color: var(--purple);
+}
+
+.search-card-arrow {
+width: 26px;
+height: 26px;
+flex-shrink: 0;
+display: grid;
+place-items: center;
+border-radius: 50%;
+background: var(--surface);
+color: var(--muted);
+font-size: 9px;
+}
+
+.search-university-card:hover .search-card-arrow {
+background: var(--purple);
+color: white;
+}
+
+/* ================================
+ADMISSION RESULTS
+================================ */
+
+.search-admission-list {
+display: grid;
+gap: 10px;
+margin-top: 13px;
+}
+
+.search-admission-card {
+display: block;
+padding: 13px;
+border: 1px solid var(--border);
+border-radius: 10px;
+color: inherit;
+transition:
+transform 0.2s ease,
+border-color 0.2s ease,
+box-shadow 0.2s ease;
+}
+
+.search-admission-card:hover {
+transform: translateY(-2px);
+border-color: #d9ccef;
+box-shadow: var(--shadow-sm);
+}
+
+.admission-card-top {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 10px;
+}
+
+.admission-verified {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+margin-bottom: 5px;
+color: var(--success);
+font-size: 7px;
+font-weight: 800;
+}
+
+.admission-card-top h4 {
+margin: 0;
+color: var(--ink);
+font-size: 11px;
+line-height: 1.45;
+}
+
+.admission-open-icon {
+flex-shrink: 0;
+color: #9b94a6;
+font-size: 10px;
+}
+
+.admission-university {
+display: flex;
+align-items: center;
+gap: 5px;
+margin: 8px 0 0;
+color: var(--purple);
+font-size: 8px;
+font-weight: 750;
+}
+
+.admission-session {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+margin-top: 7px;
+padding: 4px 7px;
+border-radius: 6px;
+background: var(--purple-soft);
+color: var(--purple);
+font-size: 7px;
+font-weight: 750;
+}
+
+.admission-excerpt {
+margin: 9px 0 0;
+color: var(--muted);
+font-size: 9px;
+line-height: 1.6;
+}
+
+.admission-card-footer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 10px;
+margin-top: 10px;
+padding-top: 9px;
+border-top: 1px solid var(--border);
+color: #9992a4;
+font-size: 7px;
+}
+
+.admission-card-footer span:last-child {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+color: var(--purple);
+font-weight: 800;
+}
+
+/* ================================
+   CAMPUS STORY RESULTS
+================================ */
+
+.search-post-list {
+
+    display: grid;
+
+    gap: 10px;
+
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.search-post-card {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    padding: 11px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    color: inherit;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+.search-post-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color: #d9ccef;
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+.search-post-image {
+
+    width: 72px;
+
+    height: 72px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background: var(--purple-soft);
+
+}
+
+.search-post-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+.search-post-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+.search-post-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 5px;
+
+}
+
+.post-category {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 3px 6px;
+
+    border-radius: 5px;
+
+    background: var(--purple-soft);
+
+    color: var(--purple);
+
+    font-size: 7px;
+
+    font-weight: 800;
+
+}
+
+.post-verified {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    color: var(--success);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+}
+
+.search-post-card h4 {
+
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+}
+
+.search-post-excerpt {
+
+    margin: 7px 0 0;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    line-height: 1.6;
+
+}
+
+.search-post-university {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 7px;
+
+    color: var(--purple);
+
+    font-size: 8px;
+
+    font-weight: 750;
+
+}
+
+.search-post-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 9px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid var(--border);
+
+    color: #9992a4;
+
+    font-size: 8px;
+
+}
+
+.search-post-footer span:last-child {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: var(--purple);
+
+    font-weight: 800;
+
+}
+
+.post-icon {
+
+    background: var(--purple-soft);
+
+    color: var(--purple);
+
+}
+
+/* ================================
+EMPTY STATES
+================================ */
+
+.search-empty-small {
+padding: 35px 15px;
+text-align: center;
+color: var(--muted);
+}
+
+.search-empty-small i {
+color: #b1aaba;
+font-size: 22px;
+}
+
+.search-empty-small p {
+margin: 9px 0 0;
+font-size: 10px;
+}
+
+/* ================================
+INITIAL SEARCH STATE
+================================ */
+
+.search-before-results {
+padding: 65px 25px;
+text-align: center;
+background: white;
+border: 1px solid var(--border);
+border-radius: var(--radius-lg);
+box-shadow: var(--shadow-sm);
+}
+
+.search-before-icon {
+width: 62px;
+height: 62px;
+display: grid;
+place-items: center;
+margin: 0 auto 17px;
+border-radius: 17px;
+background: var(--purple-soft);
+color: var(--purple);
+font-size: 22px;
+}
+
+.search-before-results h2 {
+margin: 0;
+color: var(--ink);
+font-size: 22px;
+}
+
+.search-before-results > p:last-child {
+max-width: 500px;
+margin: 9px auto 0;
+color: var(--muted);
+font-size: 11px;
+line-height: 1.7;
+}
+
+/* ================================
+TABLET
+================================ */
+
+@media (max-width: 850px) {
+
+
+.search-result-columns {
+    grid-template-columns: 1fr;
+}
+
+.discovery-filters {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.discovery-filter-button {
+    grid-column: 1 / -1;
+}
+
+
+}
+
+/* ================================
+MOBILE
+================================ */
+
+@media (max-width: 560px) {
+
+
+.search-hero-content {
+    width: min(calc(100% - 28px), var(--container));
+    padding: 50px 0 55px;
+}
+
+.search-hero h1 {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+}
+
+.search-hero-content > p:not(.search-eyebrow) {
+    font-size: 12px;
+}
+
+.discovery-search-form {
+    margin-top: 23px;
+    padding: 6px;
+}
+
+.discovery-search-main {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 6px;
+}
+
+.discovery-search-main input {
+    width: calc(100% - 45px);
+}
+
+.discovery-search-main button {
+    width: 100%;
+    margin: 6px 0 0;
+}
+
+.discovery-filters {
+    grid-template-columns: 1fr;
+    padding: 10px 2px 2px;
+}
+
+.discovery-filter-button {
+    width: 100%;
+    margin-top: 2px;
+}
+
+.search-results-section {
+    width: min(calc(100% - 28px), var(--container));
+    padding: 42px 0 60px;
+}
+
+.result-group {
+    padding: 16px;
+}
+
+.result-group-header h3 {
+    font-size: 13px;
+}
+
+.search-university-card {
+    padding: 9px;
+}
+
+.search-university-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.search-before-results {
+    padding: 50px 18px;
+}
+
+.search-post-card {
+
+    padding: 9px;
+
+}
+
+.search-post-image {
+
+    width: 60px;
+
+    height: 60px;
+
+}
+
+.search-post-card h4 {
+
+    font-size: 10px;
+
+}
+
+.search-post-excerpt {
+
+    font-size: 8px;
+
+}
+
+.search-post-footer {
+
+    font-size: 6.5px;
+
+}
+
+
+}

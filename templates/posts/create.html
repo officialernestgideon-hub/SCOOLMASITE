@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Create Post
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/post.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="post-page">
+
+
+<section class="post-create-header">
+
+    <div class="post-create-header-inner">
+
+        <div class="post-create-icon">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </div>
+
+        <div>
+            <p class="post-eyebrow">
+                <i class="fa-solid fa-feather"></i>
+                STUDENT COMMUNITY
+            </p>
+
+            <h1>
+                Create a Post
+            </h1>
+
+            <p>
+                Share something useful, interesting, or memorable
+                about your university or campus experience.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="post-create-section">
+
+    {% if messages %}
+
+        <div class="post-messages">
+
+            {% for message in messages %}
+
+                <div class="post-message">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ message }}</span>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="post-form-card">
+
+        <div class="post-form-heading">
+
+            <div>
+                <p class="form-eyebrow">
+                    SHARE YOUR EXPERIENCE
+                </p>
+
+                <h2>
+                    Tell the community something useful
+                </h2>
+
+                <p>
+                    Choose a university, add your story, and publish
+                    it for other students to discover.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="post-form"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="university">
+                        <i class="fa-solid fa-building-columns"></i>
+                        University
+                    </label>
+
+                    <select
+                        name="university"
+                        id="university"
+                        required
+                    >
+
+                        <option value="">
+                            Select university
+                        </option>
+
+                        {% for university in universities %}
+
+                            <option value="{{ university.id }}">
+                                {{ university.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                    <small>
+                        Which university is this post about?
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Category
+                    </label>
+
+                    <select
+                        name="category"
+                        id="category"
+                    >
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                    <small>
+                        Help students discover your post.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    <i class="fa-solid fa-heading"></i>
+                    Post Title
+                </label>
+
+                <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    maxlength="200"
+                    placeholder="Give your post a clear title"
+                    required
+                >
+
+                <small>
+                    Keep your title short and easy to understand.
+                </small>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="content">
+                    <i class="fa-solid fa-align-left"></i>
+                    Your Story
+                </label>
+
+                <textarea
+                    name="content"
+                    id="content"
+                    rows="10"
+                    placeholder="Write about your campus experience, advice, story, or something useful for other students..."
+                    required
+                ></textarea>
+
+                <small>
+                    Share information that can help or interest the
+                    StudentMedia community.
+                </small>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    <i class="fa-regular fa-image"></i>
+                    Post Image
+                </label>
+
+                <label
+                    for="image"
+                    class="post-upload-area"
+                >
+
+                    <span class="post-upload-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </span>
+
+                    <span class="post-upload-title">
+                        Add an image
+                    </span>
+
+                    <span class="post-upload-text">
+                        Click to choose an image from your device
+                    </span>
+
+                    <span class="post-upload-format">
+                        JPG, PNG or WebP
+                    </span>
+
+                </label>
+
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    class="post-file-input"
+                >
+
+            </div>
+
+
+            <div class="post-form-actions">
+
+                <a
+                    href="{% url 'home' %}"
+                    class="post-cancel-button"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="post-submit-button"
+                >
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Publish Post
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+</main>
+
+{% endblock %}

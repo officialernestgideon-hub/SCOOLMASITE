@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block page_css %}
+
+<link rel="stylesheet" href="{% static 'css/notification-list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="notifications-page">
+
+<section class="notifications-header">
+
+    <div class="notifications-header-inner">
+
+        <div class="notifications-header-icon">
+            <i class="fa-regular fa-bell"></i>
+        </div>
+
+        <div>
+
+            <p class="notifications-eyebrow">
+                <i class="fa-solid fa-bell"></i>
+                YOUR UPDATES
+            </p>
+
+            <h1>
+                Notifications
+            </h1>
+
+            {% if unread_count %}
+
+                <p>
+                    You have
+                    <strong>{{ unread_count }}</strong>
+                    unread notification{{ unread_count|pluralize }}.
+                </p>
+
+            {% else %}
+
+                <p>
+                    You're all caught up.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="notifications-content">
+
+    <div class="notifications-toolbar">
+
+        <div>
+
+            <p class="notifications-section-label">
+                <i class="fa-regular fa-clock"></i>
+                RECENT ACTIVITY
+            </p>
+
+            <h2>
+                Your notifications
+            </h2>
+
+        </div>
+
+
+        {% if unread_count %}
+
+            <form
+                method="POST"
+                action="{% url 'mark_all_notifications_read' %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="mark-all-button"
+                >
+                    <i class="fa-solid fa-check-double"></i>
+                    Mark all as read
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="notifications-list">
+
+        {% for notification in notifications %}
+
+            <article
+                class="notification-card {% if not notification.is_read %}notification-unread{% endif %}"
+            >
+
+                <div class="notification-icon">
+
+                    {% if notification.notification_type == "admission" %}
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    {% elif notification.notification_type == "post" %}
+
+                        <i class="fa-solid fa-pen-to-square"></i>
+
+                    {% else %}
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="notification-main">
+
+                    <div class="notification-top">
+
+                        <div>
+
+                            <div class="notification-type">
+
+                                {% if notification.notification_type == "admission" %}
+                                    Admission Update
+                                {% elif notification.notification_type == "post" %}
+                                    University Post
+                                {% else %}
+                                    StudentMedia
+                                {% endif %}
+
+                            </div>
+
+                            <h3>
+                                {{ notification.title }}
+                            </h3>
+
+                        </div>
+
+                        {% if not notification.is_read %}
+
+                            <span class="unread-dot">
+                                <span></span>
+                                Unread
+                            </span>
+
+                        {% else %}
+
+                            <span class="read-label">
+                                <i class="fa-solid fa-check"></i>
+                                Read
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p class="notification-message">
+                        {{ notification.message }}
+                    </p>
+
+
+                    <div class="notification-meta">
+
+                        {% if notification.university %}
+
+                            <span>
+                                <i class="fa-solid fa-building-columns"></i>
+                                {{ notification.university.name }}
+                            </span>
+
+                        {% endif %}
+
+                        <span>
+                            <i class="fa-regular fa-clock"></i>
+                            {{ notification.created_at|date:"M d, Y • g:i A" }}
+                        </span>
+
+                    </div>
+
+
+                    {% if not notification.is_read %}
+
+                        <form
+                            method="POST"
+                            action="{% url 'mark_notification_read' notification.id %}"
+                            class="notification-read-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="mark-read-button"
+                            >
+                                <i class="fa-solid fa-check"></i>
+                                Mark as read
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="notifications-empty">
+
+                <div class="notifications-empty-icon">
+                    <i class="fa-regular fa-bell-slash"></i>
+                </div>
+
+                <h3>
+                    No notifications yet
+                </h3>
+
+                <p>
+                    When universities you follow publish verified
+                    admission updates, you'll see them here.
+                </p>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="notifications-empty-button"
+                >
+                    <i class="fa-solid fa-building-columns"></i>
+                    Explore universities
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+</main>
+
+{% endblock %}

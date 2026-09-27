@@ -1,0 +1,137 @@
+__pycache__/ : The term '__pycache__/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is
+correct and try again.
+At line:2 char:1
++ __pycache__/
++ ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (__pycache__/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+*.py[cod] : The term '*.py[cod]' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:3 char:1
++ *.py[cod]
++ ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (*.py[cod]:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+*.pyo : The term '*.pyo' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:4 char:1
++ *.pyo
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (*.pyo:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+venv/ : The term 'venv/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:7 char:1
++ venv/
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (venv/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+env/ : The term 'env/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:8 char:1
++ env/
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (env/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.venv/ : The term '.venv/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:9 char:1
++ .venv/
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.venv/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+db.sqlite3 : The term 'db.sqlite3' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:12 char:1
++ db.sqlite3
++ ~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (db.sqlite3:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+*.log : The term '*.log' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:13 char:1
++ *.log
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (*.log:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.env : The term '.env' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:16 char:1
++ .env
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (.env:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+staticfiles/ : The term 'staticfiles/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:19 char:1
++ staticfiles/
++ ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (staticfiles/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+media/ : The term 'media/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:20 char:1
++ media/
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (media/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.vscode/ : The term '.vscode/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and 
+try again.
+At line:23 char:1
++ .vscode/
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.vscode/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.idea/ : The term '.idea/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:24 char:1
++ .idea/
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.idea/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.DS_Store : The term '.DS_Store' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:27 char:1
++ .DS_Store
++ ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.DS_Store:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+Thumbs.db : The term 'Thumbs.db' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:28 char:1
++ Thumbs.db
++ ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Thumbs.db:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.pytest_cache/ : The term '.pytest_cache/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:31 char:1
++ .pytest_cache/
++ ~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.pytest_cache/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+.mypy_cache/ : The term '.mypy_cache/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:32 char:1
++ .mypy_cache/
++ ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.mypy_cache/:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\user\Documents\SCOOLMASITE\St> 

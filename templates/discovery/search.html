@@ -1,0 +1,636 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block page_css %}
+
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="search-page">
+
+<section class="search-hero">
+
+    <div class="search-hero-pattern"></div>
+
+    <div class="search-hero-content">
+
+        <p class="search-eyebrow">
+            <i class="fa-solid fa-compass"></i>
+            DISCOVER STUDENTMEDIA
+        </p>
+
+        <h1>
+            Discover universities,<br>
+            admissions and campus life.
+        </h1>
+
+        <p>
+            Search universities, admission information,
+            student stories and campus experiences
+            all in one place.
+        </p>
+
+
+        <form
+            method="GET"
+            action="{% url 'search' %}"
+            class="discovery-search-form"
+        >
+
+            <div class="discovery-search-main">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search universities, admissions, campus stories..."
+                    autocomplete="off"
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </div>
+
+
+            <div class="discovery-filters">
+
+                <div class="discovery-filter">
+
+                    <label for="country">
+                        <i class="fa-solid fa-earth-africa"></i>
+                        Country
+                    </label>
+
+                    <select name="country" id="country">
+
+                        <option value="">
+                            All countries
+                        </option>
+
+                        {% for item in countries %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if country == item %}selected{% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="discovery-filter">
+
+                    <label for="state">
+                        <i class="fa-solid fa-location-dot"></i>
+                        State
+                    </label>
+
+                    <select name="state" id="state">
+
+                        <option value="">
+                            All states
+                        </option>
+
+                        {% for item in states %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if state == item %}selected{% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="discovery-filter">
+
+                    <label for="session">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Admission session
+                    </label>
+
+                    <select name="session" id="session">
+
+                        <option value="">
+                            All sessions
+                        </option>
+
+                        {% for item in sessions %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if session == item %}selected{% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="discovery-filter-button"
+                >
+                    <i class="fa-solid fa-sliders"></i>
+                    Apply filters
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="search-results-section">
+
+    {% if query or country or state or session %}
+
+        <div class="search-results-header">
+
+            <div>
+
+                <p class="search-section-eyebrow">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    SEARCH RESULTS
+                </p>
+
+                <h2>
+                    Results
+                </h2>
+
+                {% if query %}
+
+                    <p>
+                        Showing results for
+                        <strong>"{{ query }}"</strong>
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        Showing results based on your selected filters.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="search-result-columns">
+
+
+            <section class="result-group">
+
+                <div class="result-group-header">
+
+                    <div>
+
+                        <span class="result-group-icon">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </span>
+
+                        <div>
+                            <h3>
+                                Universities
+                            </h3>
+
+                            <p>
+                                Explore university profiles.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <span class="result-count">
+                        {{ universities|length }}
+                    </span>
+
+                </div>
+
+
+                {% if universities %}
+
+                    <div class="search-university-list">
+
+                        {% for university in universities %}
+
+                            <a
+                                href="{% url 'university_detail' university.id %}"
+                                class="search-university-card"
+                            >
+
+                                <div class="search-university-logo">
+
+                                    {% if university.logo %}
+
+                                        <img
+                                            src="{{ university.logo.url }}"
+                                            alt="{{ university.name }}"
+                                        >
+
+                                    {% else %}
+
+                                        <i class="fa-solid fa-building-columns"></i>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="search-university-info">
+
+                                    <div class="search-university-title">
+
+                                        <h4>
+                                            {{ university.name }}
+                                        </h4>
+
+                                        {% if university.is_verified %}
+
+                                            <span class="search-verified">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                Verified
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    {% if university.short_name %}
+
+                                        <span class="search-short-name">
+                                            {{ university.short_name }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <span class="search-location">
+
+                                        <i class="fa-solid fa-location-dot"></i>
+
+                                        {% if university.city %}
+                                            {{ university.city }},
+                                        {% endif %}
+
+                                        {% if university.state %}
+                                            {{ university.state }},
+                                        {% endif %}
+
+                                        {{ university.country }}
+
+                                    </span>
+
+                                </div>
+
+
+                                <span class="search-card-arrow">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="search-empty-small">
+
+                        <i class="fa-solid fa-building-circle-xmark"></i>
+
+                        <p>
+                            No universities found.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+           
+
+
+            <section class="result-group">
+
+                <div class="result-group-header">
+
+                    <div>
+
+                        <span class="result-group-icon admission-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </span>
+
+                        <div>
+                            <h3>
+                                Admission Updates
+                            </h3>
+
+                            <p>
+                                Latest published admission information.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <span class="result-count">
+                        {{ admissions|length }}
+                    </span>
+
+                </div>
+
+
+                {% if admissions %}
+
+                    <div class="search-admission-list">
+
+                        {% for admission in admissions %}
+
+                            <a
+                                href="{% url 'admission_detail' admission.id %}"
+                                class="search-admission-card"
+                            >
+
+                                <div class="admission-card-top">
+
+                                    <div>
+
+                                        {% if admission.is_verified %}
+
+                                            <span class="admission-verified">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                Verified
+                                            </span>
+
+                                        {% endif %}
+
+                                        <h4>
+                                            {{ admission.title }}
+                                        </h4>
+
+                                    </div>
+
+                                    <i class="fa-solid fa-arrow-up-right-from-square admission-open-icon"></i>
+
+                                </div>
+
+
+                                <p class="admission-university">
+
+                                    <i class="fa-solid fa-building-columns"></i>
+
+                                    {{ admission.university.name }}
+
+                                </p>
+
+
+                                {% if admission.admission_session %}
+
+                                    <span class="admission-session">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        {{ admission.admission_session }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                <p class="admission-excerpt">
+                                    {{ admission.content|truncatewords:25 }}
+                                </p>
+
+
+                                <div class="admission-card-footer">
+
+                                    <span>
+                                        {{ admission.created_at|date:"M d, Y" }}
+                                    </span>
+
+                                    <span>
+                                        View update
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="search-empty-small">
+
+                        <i class="fa-solid fa-file-circle-xmark"></i>
+
+                        <p>
+                            No admission updates found.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+    {% else %}
+
+        <div class="search-before-results">
+
+            <div class="search-before-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <p class="search-section-eyebrow">
+                START EXPLORING
+            </p>
+
+            <h2>
+                What are you looking for?
+            </h2>
+
+            <p>
+               Search for a university, admission update,
+               campus story or student experience.
+               You can also use the filters above to narrow your discovery.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+<section class="result-group">
+
+    <div class="result-group-header">
+
+        <div>
+
+            <span class="result-group-icon post-icon">
+                <i class="fa-solid fa-comments"></i>
+            </span>
+
+            <div>
+                <h3>
+                    Campus Stories
+                </h3>
+
+                <p>
+                    Stories and experiences shared by students.
+                </p>
+            </div>
+
+        </div>
+
+        <span class="result-count">
+            {{ student_posts|length }}
+        </span>
+
+    </div>
+
+
+    {% if student_posts %}
+
+        <div class="search-post-list">
+
+            {% for post in student_posts %}
+
+                <a
+                    href="{% url 'post_detail' post.id %}"
+                    class="search-post-card"
+                >
+
+                    {% if post.image %}
+
+                        <div class="search-post-image">
+
+                            <img
+                                src="{{ post.image.url }}"
+                                alt="{{ post.title }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="search-post-content">
+
+                        <div class="search-post-top">
+
+                            {% if post.category %}
+
+                                <span class="post-category">
+                                    {{ post.category.name }}
+                                </span>
+
+                            {% endif %}
+
+                            {% if post.is_verified %}
+
+                                <span class="post-verified">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Verified
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <h4>
+                            {{ post.title }}
+                        </h4>
+
+
+                        <p class="search-post-excerpt">
+                            {{ post.content|truncatewords:25 }}
+                        </p>
+
+
+                        <div class="search-post-university">
+
+                            <i class="fa-solid fa-building-columns"></i>
+
+                            {{ post.university.name }}
+
+                        </div>
+
+
+                        <div class="search-post-footer">
+
+                            <span>
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ post.created_at|date:"M d, Y" }}
+                            </span>
+
+                            <span>
+                                Read story
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="search-empty-small">
+
+            <i class="fa-solid fa-comments"></i>
+
+            <p>
+                No campus stories found.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+</main>
+
+{% endblock %}

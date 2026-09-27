@@ -1,0 +1,498 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block page_css %}
+
+<link rel="stylesheet" href="{% static 'css/account-dashboard.css' %}"> {% endblock %}
+
+{% block content %}
+
+<main class="student-dashboard">
+
+<div class="dashboard-container">
+
+    <!-- DASHBOARD HERO -->
+
+    <section class="dashboard-hero">
+
+        <div class="dashboard-hero-content">
+
+            <span class="dashboard-eyebrow">
+                <i class="fa-solid fa-graduation-cap"></i>
+                Student Dashboard
+            </span>
+
+            <h1>
+                Welcome back,
+                <span>{{ request.user.username }}</span>
+            </h1>
+
+            <p>
+                Stay connected to your universities, admission updates,
+                and the latest campus stories.
+            </p>
+
+        </div>
+
+        <div class="dashboard-hero-icon">
+
+            <a href="{% url 'profile' %}">
+                <i class="fa-regular fa-user"></i>
+            </a>
+             {% comment %} <span>Your Profile</span> {% endcomment %}
+                     
+        </div>
+        
+
+    </section>
+
+
+    <!-- FOLLOWED UNIVERSITIES -->
+
+    <section class="dashboard-section">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-kicker">
+                    Your network
+                </span>
+
+                <h2>
+                    My Universities
+                </h2>
+            </div>
+
+            <a
+                href="{% url 'university_list' %}"
+                class="section-link"
+            >
+                Explore universities
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        {% if followed_universities %}
+
+            <div class="university-dashboard-grid">
+
+                {% for university in followed_universities %}
+
+                    <article class="dashboard-university-card">
+
+                        <div class="dashboard-university-top">
+
+                            {% if university.logo %}
+
+                                <img
+                                    src="{{ university.logo.url }}"
+                                    alt="{{ university.name }}"
+                                    class="dashboard-university-logo"
+                                >
+
+                            {% else %}
+
+                                <div class="dashboard-university-logo logo-placeholder">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+
+                            {% endif %}
+
+                            {% if university.is_verified %}
+
+                                <span class="verified-mini">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Verified
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="dashboard-university-body">
+
+                            <h3>
+                                {{ university.name }}
+                            </h3>
+
+                            {% if university.city or university.state %}
+
+                                <p class="university-location">
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    {% if university.city %}
+                                        {{ university.city }}
+                                    {% endif %}
+
+                                    {% if university.city and university.state %}
+                                        ,
+                                    {% endif %}
+
+                                    {% if university.state %}
+                                        {{ university.state }}
+                                    {% endif %}
+
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'university_detail' university.id %}"
+                            class="dashboard-card-link"
+                        >
+                            View university
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="dashboard-empty">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+
+                <h3>
+                    You are not following any universities yet
+                </h3>
+
+                <p>
+                    Follow universities to keep their latest posts and
+                    admission updates close to your dashboard.
+                </p>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="primary-button"
+                >
+                    <i class="fa-solid fa-compass"></i>
+                    Explore Universities
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ADMISSION UPDATES -->
+
+    <section class="dashboard-section">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-kicker">
+                    Stay informed
+                </span>
+
+                <h2>
+                    Admission Updates
+                </h2>
+            </div>
+
+        </div>
+
+
+        {% if recent_admissions %}
+
+            <div class="admission-dashboard-list">
+
+                {% for admission in recent_admissions %}
+
+                    <article class="dashboard-admission-card">
+
+                        <div class="admission-card-main">
+
+                            <div class="admission-card-icon">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+
+                            <div class="admission-card-content">
+
+                                <div class="admission-card-meta">
+
+                                    <span>
+                                        {{ admission.university.name }}
+                                    </span>
+
+                                    {% if admission.is_verified %}
+
+                                        <span class="verified-mini">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            Verified
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                                <h3>
+                                    {{ admission.title }}
+                                </h3>
+
+                                <p>
+                                    {{ admission.content|truncatewords:35 }}
+                                </p>
+
+                                <div class="admission-card-details">
+
+                                    {% if admission.admission_session %}
+
+                                        <span>
+                                            <i class="fa-solid fa-calendar"></i>
+                                            {{ admission.admission_session }}
+                                        </span>
+
+                                    {% endif %}
+
+                                    {% if admission.application_deadline %}
+
+                                        <span class="deadline">
+
+                                            <i class="fa-solid fa-calendar-xmark"></i>
+
+                                            Deadline:
+                                            {{ admission.application_deadline|date:"M d, Y" }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admission-card-actions">
+
+                            <a
+                                href="{% url 'admission_detail' admission.id %}"
+                                class="secondary-button"
+                            >
+                                Read update
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+                            {% if admission.official_link %}
+
+                                <a
+                                    href="{{ admission.official_link }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="official-small-link"
+                                >
+                                    Official source
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="dashboard-empty compact">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <h3>
+                    No admission updates yet
+                </h3>
+
+                <p>
+                    New verified admission updates from your universities
+                    will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- RECENT POSTS -->
+
+    <section class="dashboard-section">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-kicker">
+                    Campus life
+                </span>
+
+                <h2>
+                    Recent Campus Posts
+                </h2>
+            </div>
+
+        </div>
+
+
+        {% if recent_posts %}
+
+            <div class="dashboard-post-grid">
+
+                {% for post in recent_posts %}
+
+                    <article class="dashboard-post-card">
+
+                        {% if post.image %}
+
+                            <a
+                                href="{% url 'post_detail' post.id %}"
+                                class="dashboard-post-image"
+                            >
+                                <img
+                                    src="{{ post.image.url }}"
+                                    alt="{{ post.title }}"
+                                >
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'post_detail' post.id %}"
+                                class="dashboard-post-image post-image-placeholder"
+                            >
+                                <i class="fa-solid fa-camera"></i>
+                            </a>
+
+                        {% endif %}
+
+
+                        <div class="dashboard-post-body">
+
+                            <div class="post-meta-row">
+
+                                {% if post.category %}
+
+                                    <span class="post-category">
+                                        {{ post.category.name }}
+                                    </span>
+
+                                {% endif %}
+
+                                <span class="post-university">
+                                    {{ post.university.name }}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                <a
+                                    href="{% url 'post_detail' post.id %}"
+                                >
+                                    {{ post.title }}
+                                </a>
+                            </h3>
+
+
+                            <p class="post-excerpt">
+                                {{ post.content|truncatewords:30 }}
+                            </p>
+
+
+                            <div class="post-stats">
+
+                                <span>
+                                    <i class="fa-regular fa-eye"></i>
+                                    {{ post.views_count }}
+                                </span>
+
+                                <span>
+                                    <i class="fa-regular fa-heart"></i>
+                                    {{ post.likes.count }}
+                                </span>
+
+                                <span>
+                                    <i class="fa-regular fa-comment"></i>
+                                    {{ post.comments.count }}
+                                </span>
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'post_detail' post.id %}"
+                                class="read-post-link"
+                            >
+                                Read post
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="dashboard-empty">
+
+                <div class="empty-icon">
+                    <i class="fa-regular fa-newspaper"></i>
+                </div>
+
+                <h3>
+                    No recent campus posts
+                </h3>
+
+                <p>
+                    Posts from your followed universities will appear
+                    here when students start sharing.
+                </p>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="primary-button"
+                >
+                    Explore Universities
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+</main>
+{% block page_footer %}{% endblock %}
+
+{% endblock %}

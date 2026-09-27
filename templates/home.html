@@ -1,0 +1,850 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-background-image">
+        <img
+            src="{% static 'media/backgroun uni.jpg' %}"
+            alt=""
+        >
+    </div>
+
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            STUDENT MEDIA + ADMISSIONS
+        </p>
+
+
+        <h1>
+            Discover campus life.
+            Stay ahead of admissions.
+        </h1>
+
+
+        <p class="hero-description">
+            Explore universities, campus experiences,
+            student stories and verified admission updates
+            all in one place.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <form
+            method="GET"
+            action="{% url 'search' %}"
+            class="hero-search"
+        >
+
+            <div class="hero-search-input">
+
+                <span class="search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Search universities, admissions, campus stories..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Search
+            </button>
+
+        </form>
+
+
+        <!-- ACTIONS -->
+
+        <div class="hero-actions">
+
+            <a
+                href="{% url 'university_list' %}"
+                class="button primary"
+            >
+                Explore universities
+            </a>
+
+
+            {% if not user.is_authenticated %}
+
+                <a
+                    href="{% url 'register' %}"
+                    class="button secondary"
+                >
+                    Create account
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     DISCOVER UNIVERSITIES
+========================================== -->
+
+<section class="section universities-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-eyebrow">
+                <i class="fa-solid fa-building-columns"></i>
+                EXPLORE
+            </p>
+
+            <h2>Discover Universities</h2>
+
+            <p>
+                Explore universities, discover campus communities,
+                and stay informed about admission opportunities.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'university_list' %}"
+            class="section-link"
+        >
+            View all
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+
+    {% if universities %}
+
+        <div class="universities-carousel">
+
+            {% for university in universities %}
+
+                <a
+                    href="{% url 'university_detail' university.id %}"
+                    class="university-card-link"
+                >
+
+                    <article class="university-card">
+
+                        <div class="university-card-top">
+
+                            {% if university.cover_image %}
+
+                                <img
+                                    src="{{ university.cover_image.url }}"
+                                    alt="{{ university.name }}"
+                                    class="university-cover"
+                                >
+
+                            {% else %}
+
+                                <div class="university-cover university-cover-placeholder">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+
+                            {% endif %}
+
+                            {% if university.is_verified %}
+                                <span class="verified-badge">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Verified
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="university-card-body">
+
+                            <div class="university-logo-wrap">
+
+                                {% if university.logo %}
+
+                                    <img
+                                        src="{{ university.logo.url }}"
+                                        alt="{{ university.name }}"
+                                        class="university-logo"
+                                    >
+
+                                {% else %}
+
+                                    <div class="university-logo university-logo-placeholder">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="university-info">
+
+                                <h3>
+                                    {{ university.name }}
+                                </h3>
+
+                                {% if university.short_name %}
+                                    <span class="university-short-name">
+                                        {{ university.short_name }}
+                                    </span>
+                                {% endif %}
+
+                                <div class="university-location">
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    <span>
+                                        {% if university.city %}
+                                            {{ university.city }},
+                                        {% endif %}
+
+                                        {% if university.state %}
+                                            {{ university.state }},
+                                        {% endif %}
+
+                                        {{ university.country }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="university-card-footer">
+
+                                <span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    Explore university
+                                </span>
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="section-empty">
+
+            <div class="section-empty-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <h3>No universities yet</h3>
+
+            <p>
+                University profiles will appear here as they are added.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- ==========================================
+     FEATURES
+========================================== -->
+
+<section class="section features-section">
+
+    <div class="section-heading features-heading">
+
+        <div>
+            <p class="section-eyebrow">
+                <i class="fa-solid fa-sparkles"></i>
+                WHY STUDENT MEDIA
+            </p>
+
+            <h2>Everything students need, in one place.</h2>
+
+            <p>
+                Discover campus communities, follow universities,
+                share experiences, and stay informed about important
+                admission updates.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="features-grid">
+
+        <!-- FEATURE 1 -->
+        <article class="feature-card feature-card-primary">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <div class="feature-number">01</div>
+
+            <h3>Discover Universities</h3>
+
+            <p>
+                Explore universities, campus communities,
+                locations and useful information before making
+                your next academic move.
+            </p>
+
+            <a href="{% url 'university_list' %}" class="feature-link">
+                Explore universities
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </article>
+
+
+        <!-- FEATURE 2 -->
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+
+            <div class="feature-number">02</div>
+
+            <h3>Admission Updates</h3>
+
+            <p>
+                Find public admission information and important
+                updates from universities without needing to
+                follow them first.
+            </p>
+
+            <a href="{% url 'search' %}" class="feature-link">
+                Find admission updates
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </article>
+
+
+        <!-- FEATURE 3 -->
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-solid fa-comments"></i>
+            </div>
+
+            <div class="feature-number">03</div>
+
+            <h3>Student Stories</h3>
+
+            <p>
+                Read real student experiences, campus stories
+                and useful conversations from university
+                communities.
+            </p>
+
+            <a href="{% url 'search' %}" class="feature-link">
+                Explore student media
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </article>
+
+
+        <!-- FEATURE 4 -->
+        <article class="feature-card">
+
+            <div class="feature-icon">
+                <i class="fa-regular fa-bell"></i>
+            </div>
+
+            <div class="feature-number">04</div>
+
+            <h3>Stay Connected</h3>
+
+            <p>
+                Follow universities you're interested in and
+                receive notifications when new relevant updates
+                are published.
+            </p>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="feature-link">
+                    Open dashboard
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'register' %}" class="feature-link">
+                    Create your account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            {% endif %}
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     TRENDING
+========================================== -->
+
+<section class="section trending-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-eyebrow">
+                <i class="fa-solid fa-fire"></i>
+                WHAT'S TRENDING
+            </p>
+
+            <h2>Popular on campus</h2>
+
+            <p>
+                See what students are reading, discussing and
+                discovering across university communities.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'search' %}"
+            class="section-link"
+        >
+            View all
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+
+    {% if trending_posts %}
+
+        <div class="trending-grid">
+
+            {% for post in trending_posts %}
+
+                <a
+                    href="{% url 'post_detail' post.id %}"
+                    class="trending-card-link"
+                >
+
+                    <article class="trending-card">
+
+                        <div class="trending-image">
+
+                            {% if post.image %}
+
+                                <img
+                                    src="{{ post.image.url }}"
+                                    alt="{{ post.title }}"
+                                >
+
+                            {% else %}
+
+                                <div class="trending-image-placeholder">
+                                    <i class="fa-solid fa-newspaper"></i>
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if post.category %}
+
+                                <span class="trending-category">
+                                    {{ post.category.name }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="trending-body">
+
+                            <div class="trending-meta">
+
+                                <span>
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    {{ post.university.short_name|default:post.university.name }}
+                                </span>
+
+                                <span>
+                                    <i class="fa-solid fa-eye"></i>
+                                    {{ post.views_count }}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                {{ post.title }}
+                            </h3>
+
+
+                            <p>
+                                {{ post.content|truncatewords:18 }}
+                            </p>
+
+
+                            <div class="trending-footer">
+
+                                <span>
+                                    {% if post.author.get_full_name %}
+                                        {{ post.author.get_full_name }}
+                                    {% else %}
+                                        {{ post.author.username }}
+                                    {% endif %}
+                                </span>
+
+                                <span class="trending-read">
+                                    Read
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="section-empty">
+
+            <div class="section-empty-icon">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+
+            <h3>No trending posts yet</h3>
+
+            <p>
+                Popular student stories and campus conversations
+                will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- ==========================================
+     LATEST POSTS
+========================================== -->
+
+<section class="section latest-posts-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-eyebrow">
+                <i class="fa-solid fa-users"></i>
+                STUDENT MEDIA
+            </p>
+
+            <h2>Latest from students</h2>
+
+            <p>
+                See the latest stories, conversations and experiences
+                being shared across student communities.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'search' %}"
+            class="section-link"
+        >
+            View all
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+
+    {% if latest_posts %}
+
+        <div class="latest-posts-grid">
+
+            {% for post in latest_posts %}
+
+                <a
+                    href="{% url 'post_detail' post.id %}"
+                    class="latest-post-link"
+                >
+
+                    <article class="latest-post-card">
+
+                        {% if post.image %}
+
+                            <div class="latest-post-image">
+
+                                <img
+                                    src="{{ post.image.url }}"
+                                    alt="{{ post.title }}"
+                                >
+
+                                {% if post.category %}
+                                    <span class="latest-post-category">
+                                        {{ post.category.name }}
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="latest-post-no-image">
+
+                                <i class="fa-solid fa-pen-nib"></i>
+
+                                {% if post.category %}
+                                    <span class="latest-post-category">
+                                        {{ post.category.name }}
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="latest-post-content">
+
+                            <div class="latest-post-university">
+
+                                <span class="university-mini-icon">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </span>
+
+                                <span>
+                                    {{ post.university.short_name|default:post.university.name }}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                {{ post.title }}
+                            </h3>
+
+
+                            <p>
+                                {{ post.content|truncatewords:20 }}
+                            </p>
+
+
+                            <div class="latest-post-author">
+
+                                <div class="author-avatar">
+
+                                    {% if post.author.student_profile.profile_picture %}
+
+                                        <img
+                                            src="{{ post.author.student_profile.profile_picture.url }}"
+                                            alt="{{ post.author.username }}"
+                                        >
+
+                                    {% else %}
+
+                                        <i class="fa-solid fa-user"></i>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="author-details">
+
+                                    <strong>
+                                        {% if post.author.get_full_name %}
+                                            {{ post.author.get_full_name }}
+                                        {% else %}
+                                            {{ post.author.username }}
+                                        {% endif %}
+                                    </strong>
+
+                                    <span>
+                                        {{ post.created_at|date:"M d, Y" }}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="post-engagement">
+
+                                    <span>
+                                        <i class="fa-solid fa-eye"></i>
+                                        {{ post.views_count }}
+                                    </span>
+
+                                    <span>
+                                        <i class="fa-regular fa-heart"></i>
+                                        {{ post.likes.count }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="section-empty">
+
+            <div class="section-empty-icon">
+                <i class="fa-solid fa-pen-nib"></i>
+            </div>
+
+            <h3>No student posts yet</h3>
+
+            <p>
+                Student stories and conversations will appear here
+                once the community starts sharing.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- ==========================================
+     FINAL CTA
+========================================== -->
+
+<section class="final-cta">
+
+    <div class="final-cta-background">
+        <span class="cta-shape cta-shape-one"></span>
+        <span class="cta-shape cta-shape-two"></span>
+        <span class="cta-shape cta-shape-three"></span>
+    </div>
+
+    <div class="final-cta-content">
+
+        <div class="final-cta-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <p class="final-cta-eyebrow">
+            JOIN THE COMMUNITY
+        </p>
+
+        <h2>
+            Your university experience
+            starts here.
+        </h2>
+
+        <p>
+            Discover universities, follow the communities
+            that matter to you, share your experience and
+            stay ahead of important admission updates.
+        </p>
+
+        <div class="final-cta-actions">
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="cta-button cta-primary"
+                >
+                    Go to dashboard
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="cta-button cta-secondary"
+                >
+                    Explore universities
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'register' %}"
+                    class="cta-button cta-primary"
+                >
+                    Create your account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="cta-button cta-secondary"
+                >
+                    Explore universities
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

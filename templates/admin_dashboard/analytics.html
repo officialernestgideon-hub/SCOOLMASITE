@@ -1,0 +1,1186 @@
+{% extends "admin_dashboard/base.html" %}
+{% load static %}
+
+{% block title %}
+Analytics
+{% endblock %}
+
+{% block page_heading %}
+Analytics
+{% endblock %}
+
+{% block analytics_active %}
+active
+{% endblock %}
+
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin_analytics.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="analytics-content">
+
+
+    <!-- =====================================================
+         TOP METRICS
+    ====================================================== -->
+
+    <section class="analytics-metrics">
+
+        <div class="analytics-card purple">
+
+            <div class="analytics-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <span>Unique Visitors</span>
+
+            <strong>
+                {{ unique_visitors }}
+            </strong>
+
+            <small>
+                {{ visitors_today }} today
+            </small>
+
+        </div>
+
+
+        <div class="analytics-card brown">
+
+            <div class="analytics-icon">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+
+            <span>Page Views</span>
+
+            <strong>
+                {{ total_page_views }}
+            </strong>
+
+            <small>
+                {{ page_views_today }} today
+            </small>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <div class="analytics-icon">
+                <i class="fa-solid fa-rotate"></i>
+            </div>
+
+            <span>Returning Visitors</span>
+
+            <strong>
+                {{ returning_visitors }}
+            </strong>
+
+            <small>
+                Repeat sessions
+            </small>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <div class="analytics-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
+
+            <span>Last 30 Days</span>
+
+            <strong>
+                {{ visitors_month }}
+            </strong>
+
+            <small>
+                Unique visitors
+            </small>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         VISITOR TREND
+    ====================================================== -->
+
+    <section class="analytics-section large">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>VISITOR ACTIVITY</span>
+
+                <h2>
+                    Visitor Trend
+                </h2>
+
+            </div>
+
+            <div class="section-summary">
+                {{ visitors_week }} visitors this week
+            </div>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <canvas id="visitorTrendChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         POPULAR PAGES + TRAFFIC SOURCES
+    ====================================================== -->
+
+    <div class="analytics-grid traffic-overview-grid">
+
+
+        <!-- POPULAR PAGES -->
+
+        <section class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>TRAFFIC</span>
+
+                    <h2>
+                        Popular Pages
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-chart-simple section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                {% for page in popular_pages %}
+
+                <div class="list-row">
+
+                    <div class="row-icon">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                    </div>
+
+
+                    <div class="row-content">
+
+                        <strong>
+                            {{ page.path }}
+                        </strong>
+
+                        <span>
+                            Page views
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        {{ page.views }}
+                    </b>
+
+                </div>
+
+                {% empty %}
+
+                <div class="analytics-empty">
+                    No page activity yet.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- TRAFFIC SOURCES -->
+
+        <section class="analytics-section traffic-source-card">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>ACQUISITION</span>
+
+                    <h2>
+                        Traffic Sources
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-share-nodes section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="traffic-chart-container">
+
+                <canvas id="trafficSourceChart"></canvas>
+
+            </div>
+
+
+            <div class="traffic-source-summary">
+
+                <div>
+
+                    <strong>
+                        {{ total_page_views }}
+                    </strong>
+
+                    <span>
+                        Total tracked visits
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        {{ visitors_week }}
+                    </strong>
+
+                    <span>
+                        This week
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         USER GROWTH
+         STANDS ALONE
+    ====================================================== -->
+
+    <section class="analytics-section user-growth-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>ACCOUNT ACTIVITY</span>
+
+                <h2>
+                    User Growth
+                </h2>
+
+            </div>
+
+            <div class="section-summary">
+                {{ user_growth|length }} day trend
+            </div>
+
+        </div>
+
+
+        <div class="user-growth-chart">
+
+            <canvas id="userGrowthChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DEVICES + OPERATING SYSTEM
+    ====================================================== -->
+
+    <div class="device-os-grid">
+
+
+        <!-- DEVICES -->
+
+        <section class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>TECHNOLOGY</span>
+
+                    <h2>
+                        Devices
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-mobile-screen section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                {% for device in devices %}
+
+                <div class="list-row">
+
+                    <div class="row-icon purple-icon">
+
+                        <i class="fa-solid fa-mobile-screen"></i>
+
+                    </div>
+
+
+                    <div class="row-content">
+
+                        <strong>
+                            {{ device.device_type }}
+                        </strong>
+
+                        <span>
+                            Visits
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        {{ device.total }}
+                    </b>
+
+                </div>
+
+                {% empty %}
+
+                <div class="analytics-empty">
+                    No device data yet.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- OPERATING SYSTEM -->
+
+        <section class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>TECHNOLOGY</span>
+
+                    <h2>
+                        Operating Systems
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-desktop section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                {% for os in operating_systems %}
+
+                <div class="list-row">
+
+                    <div class="row-icon brown-icon">
+
+                        <i class="fa-solid fa-desktop"></i>
+
+                    </div>
+
+
+                    <div class="row-content">
+
+                        <strong>
+                            {{ os.operating_system }}
+                        </strong>
+
+                        <span>
+                            Visits
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        {{ os.total }}
+                    </b>
+
+                </div>
+
+                {% empty %}
+
+                <div class="analytics-empty">
+                    No operating-system data yet.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BROWSERS + COUNTRIES
+    ====================================================== -->
+
+    <div class="technology-grid">
+
+
+        <!-- BROWSERS -->
+
+        <section class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>TECHNOLOGY</span>
+
+                    <h2>
+                        Browsers
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-globe section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                {% for browser in browsers %}
+
+                <div class="list-row">
+
+                    <div class="row-icon brown-icon">
+
+                        <i class="fa-solid fa-globe"></i>
+
+                    </div>
+
+
+                    <div class="row-content">
+
+                        <strong>
+                            {{ browser.browser }}
+                        </strong>
+
+                        <span>
+                            Visits
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        {{ browser.total }}
+                    </b>
+
+                </div>
+
+                {% empty %}
+
+                <div class="analytics-empty">
+                    No browser data yet.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- COUNTRIES -->
+
+        <section class="analytics-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>GEOGRAPHY</span>
+
+                    <h2>
+                        Countries
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-location-dot section-heading-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                {% for country in countries %}
+
+                <div class="list-row">
+
+                    <div class="row-icon purple-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+
+                    <div class="row-content">
+
+                        <strong>
+                            {{ country.country }}
+                        </strong>
+
+                        <span>
+                            Visits
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        {{ country.total }}
+                    </b>
+
+                </div>
+
+                {% empty %}
+
+                <div class="analytics-empty">
+                    Country tracking will appear after
+                    geolocation is connected.
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENT ANALYTICS
+    ====================================================== -->
+
+    <section class="content-analytics">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span>CONTENT PERFORMANCE</span>
+
+                <h2>
+                    Content Analytics
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="content-stats">
+
+            <div>
+
+                <span>
+                    Posts
+                </span>
+
+                <strong>
+                    {{ total_posts }}
+                </strong>
+
+                <small>
+                    {{ published_posts }} published
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Universities
+                </span>
+
+                <strong>
+                    {{ total_universities }}
+                </strong>
+
+                <small>
+                    {{ verified_universities }} verified
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Admissions
+                </span>
+
+                <strong>
+                    {{ total_admissions }}
+                </strong>
+
+                <small>
+                    {{ published_admissions }} published
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="popular-posts">
+
+            <h3>
+                Most Viewed Posts
+            </h3>
+
+
+            {% for post in popular_posts %}
+
+            <div class="post-row">
+
+                <div>
+
+                    <strong>
+                        {{ post.title }}
+                    </strong>
+
+                    <span>
+                        {{ post.created_at|date:"M d, Y" }}
+                    </span>
+
+                </div>
+
+
+                <b>
+
+                    {{ post.views_count }}
+
+                    <small>
+                        views
+                    </small>
+
+                </b>
+
+            </div>
+
+            {% empty %}
+
+            <p class="analytics-empty">
+                No post view data yet.
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}
+
+
+
+{% block page_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+{{ visitor_trend|json_script:"visitor-trend-data" }}
+
+{{ user_growth|json_script:"user-growth-data" }}
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* =====================================================
+       SHARED CHART SETTINGS
+    ====================================================== */
+
+    const purple = "#7048a8";
+    const brown = "#8b5e3c";
+    const green = "#174f3f";
+    const deepPurple = "#24113f";
+    const gridColor = "#eee9f1";
+
+
+    /* =====================================================
+       VISITOR TREND
+    ====================================================== */
+
+    const visitorElement =
+        document.getElementById("visitor-trend-data");
+
+    const visitorCanvas =
+        document.getElementById("visitorTrendChart");
+
+
+    if (visitorElement && visitorCanvas) {
+
+        const visitorData =
+            JSON.parse(visitorElement.textContent);
+
+
+        new Chart(
+            visitorCanvas,
+            {
+                type: "line",
+
+                data: {
+
+                    labels: visitorData.map(
+                        item => item.label
+                    ),
+
+                    datasets: [
+
+                        {
+                            label: "Visitors",
+
+                            data: visitorData.map(
+                                item => item.visitors
+                            ),
+
+                            borderColor: purple,
+
+                            backgroundColor:
+                                "rgba(112, 72, 168, 0.10)",
+
+                            borderWidth: 3,
+
+                            fill: true,
+
+                            tension: 0.4,
+
+                            pointRadius: 4,
+
+                            pointHoverRadius: 7
+
+                        },
+
+
+                        {
+                            label: "Page Views",
+
+                            data: visitorData.map(
+                                item => item.page_views
+                            ),
+
+                            borderColor: brown,
+
+                            backgroundColor:
+                                "rgba(139, 94, 60, 0.06)",
+
+                            borderWidth: 3,
+
+                            fill: true,
+
+                            tension: 0.4,
+
+                            pointRadius: 4,
+
+                            pointHoverRadius: 7
+
+                        },
+
+
+                        {
+                            label: "Returning",
+
+                            data: visitorData.map(
+                                item => item.returning
+                            ),
+
+                            borderColor: green,
+
+                            backgroundColor:
+                                "transparent",
+
+                            borderWidth: 2,
+
+                            fill: false,
+
+                            tension: 0.4,
+
+                            pointRadius: 3,
+
+                            pointHoverRadius: 6
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    interaction: {
+                        intersect: false,
+                        mode: "index"
+                    },
+
+                    plugins: {
+
+                        legend: {
+                            position: "top",
+
+                            align: "end",
+
+                            labels: {
+                                usePointStyle: true,
+                                padding: 18
+                            }
+                        },
+
+                        tooltip: {
+
+                            backgroundColor: deepPurple,
+
+                            padding: 12,
+
+                            cornerRadius: 10
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            grid: {
+                                color: gridColor
+                            },
+
+                            ticks: {
+                                precision: 0
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       USER GROWTH
+    ====================================================== */
+
+    const growthElement =
+        document.getElementById("user-growth-data");
+
+    const growthCanvas =
+        document.getElementById("userGrowthChart");
+
+
+    if (growthElement && growthCanvas) {
+
+        const growthData =
+            JSON.parse(growthElement.textContent);
+
+
+        new Chart(
+            growthCanvas,
+            {
+                type: "line",
+
+                data: {
+
+                    labels: growthData.map(
+                        item => item.label
+                    ),
+
+                    datasets: [
+
+                        {
+                            label: "Users",
+
+                            data: growthData.map(
+                                item => item.users
+                            ),
+
+                            borderColor: brown,
+
+                            backgroundColor:
+                                "rgba(139, 94, 60, 0.12)",
+
+                            borderWidth: 3,
+
+                            fill: true,
+
+                            tension: 0.4,
+
+                            pointBackgroundColor: brown,
+
+                            pointBorderColor: "#ffffff",
+
+                            pointBorderWidth: 2,
+
+                            pointRadius: 4,
+
+                            pointHoverRadius: 7
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        },
+
+                        tooltip: {
+
+                            backgroundColor: deepPurple,
+
+                            padding: 12,
+
+                            cornerRadius: 10
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            grid: {
+                                color: gridColor
+                            },
+
+                            ticks: {
+                                precision: 0
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       TRAFFIC SOURCES
+    ====================================================== */
+
+    const trafficCanvas =
+        document.getElementById("trafficSourceChart");
+
+
+    const trafficSources = [
+
+        {% for source in traffic_sources|slice:":6" %}
+
+        {
+            label: "{{ source.traffic_source|escapejs }}",
+            value: {{ source.total }}
+        },
+
+        {% endfor %}
+
+    ];
+
+
+    if (
+        trafficCanvas &&
+        trafficSources.length > 0
+    ) {
+
+        new Chart(
+            trafficCanvas,
+            {
+                type: "doughnut",
+
+                data: {
+
+                    labels: trafficSources.map(
+                        item => item.label
+                    ),
+
+                    datasets: [
+
+                        {
+                            data: trafficSources.map(
+                                item => item.value
+                            ),
+
+                            backgroundColor: [
+
+                                "#7048a8",
+                                "#8b5e3c",
+                                "#174f3f",
+                                "#f5c84b",
+                                "#9b75c5",
+                                "#c69b78"
+
+                            ],
+
+                            borderWidth: 0,
+
+                            hoverOffset: 8
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    cutout: "68%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom",
+
+                            labels: {
+
+                                usePointStyle: true,
+
+                                padding: 18,
+
+                                boxWidth: 9
+
+                            }
+
+                        },
+
+                        tooltip: {
+
+                            backgroundColor: deepPurple,
+
+                            padding: 12,
+
+                            cornerRadius: 10
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,790 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Student Media — Discover universities, campus experiences, student stories and admission updates."
+    >
+
+    <title>
+        {% block title %}
+        Student Media
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/base.css' %}"
+    >
+
+    {% block page_css %}
+    {% endblock %}
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a
+            href="{% url 'home' %}"
+            class="logo"
+        >
+            <span class="logo-mark">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+
+            <span>
+                SCOOLMA<span>SITE</span>
+            </span>
+        </a>
+
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <nav class="main-nav">
+
+            <a href="{% url 'home' %}">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="{% url 'university_list' %}">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>Universities</span>
+            </a>
+
+            <a href="{% url 'search' %}">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </a>
+
+            {% comment %} <a href="{% url 'search' %}">
+                <i class="fa-lightbulb or fa-solid fa-lightbulb"></i>
+                <span>Opportunites</span>
+            </a> {% endcomment %}
+
+            <a href="">
+                <i class="fa-solid fa-phone"></i>
+                <span>Contact</span>
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'dashboard' %}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{% url 'notification_list' %}">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Notifications</span>
+
+                    {% if unread_notification_count %}
+                        <span class="notification-badge">
+                            {{ unread_notification_count }}
+                        </span>
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'create_post' %}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Create Post</span>
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Login</span>
+                </a>
+
+                <a
+                    href="{% url 'register' %}"
+                    class="nav-register"
+                >
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Join Scoolmasite</span>
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            type="button"
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU OVERLAY -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
+    <!-- MOBILE NAVIGATION -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+        aria-hidden="true"
+    >
+
+        <div class="mobile-menu-header">
+
+            <span class="mobile-menu-title">
+                Menu
+            </span>
+
+            <button
+                type="button"
+                class="mobile-menu-close"
+                id="mobileMenuClose"
+                aria-label="Close navigation menu"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="mobile-nav">
+
+            <a href="{% url 'home' %}">
+                <span class="mobile-nav-icon">
+                    <i class="fa-solid fa-house"></i>
+                </span>
+
+                <span>Home</span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+
+            <a href="{% url 'university_list' %}">
+                <span class="mobile-nav-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </span>
+
+                <span>Universities</span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+
+            <a href="{% url 'search' %}">
+                <span class="mobile-nav-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+
+                <span>Search</span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+            <a href="">
+                <span class="mobile-nav-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </span>
+
+                <span>Contact</span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'dashboard' %}">
+                    <span class="mobile-nav-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
+
+                    <span>Dashboard</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+
+                <a href="{% url 'profile' %}">
+                    <span class="mobile-nav-icon">
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+
+                    <span>Profile</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+
+                <a href="{% url 'notification_list' %}">
+
+                    <span class="mobile-nav-icon">
+                        <i class="fa-regular fa-bell"></i>
+                    </span>
+
+                    <span>
+                        Notifications
+                    </span>
+
+                    {% if unread_notification_count %}
+                        <span class="mobile-notification-count">
+                            {{ unread_notification_count }}
+                        </span>
+                    {% endif %}
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </a>
+
+
+                <a href="{% url 'create_post' %}">
+                    <span class="mobile-nav-icon">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                    <span>Create Post</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+
+                <a href="{% url 'logout' %}">
+                    <span class="mobile-nav-icon">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </span>
+
+                    <span>Logout</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    <span class="mobile-nav-icon">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                    </span>
+
+                    <span>Login</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+
+                <a
+                    href="{% url 'register' %}"
+                    class="mobile-register"
+                >
+                    <span class="mobile-nav-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </span>
+
+                    <span>Join Scoolmasite</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MESSAGES
+========================= -->
+
+{% if messages %}
+
+<div class="messages" id="messages">
+
+    {% for message in messages %}
+
+        <div
+            class="message message-{{ message.tags|default:'info' }}"
+        >
+
+            <span class="message-icon">
+
+                {% if message.tags == "success" %}
+                    <i class="fa-solid fa-circle-check"></i>
+
+                {% elif message.tags == "error" %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                {% else %}
+                     <i class="fa-solid fa-circle-info"></i>
+                {% endif %}
+
+            </span>
+
+            <span class="message-text">
+                {{ message }}
+            </span>
+
+            <button
+                type="button"
+                class="message-close"
+                onclick="this.parentElement.remove()"
+                aria-label="Close message"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+{% block page_footer %}
+    {% endblock %}
+
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+        <div class="footer-inner">
+
+            <!-- BRAND -->
+            <div class="footer-brand">
+
+                <a
+                    href="{% url 'home' %}"
+                    class="footer-logo"
+                >
+                    <span class="footer-logo-mark">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </span>
+
+                    <span>
+                        SCOOLMA<span>SITE</span>
+                    </span>
+                </a>
+
+                <p class="footer-description">
+                    A student-focused platform for discovering
+                    universities, sharing campus experiences
+                    and staying informed about admission updates and more.
+                </p>
+
+
+                <!-- SOCIALS -->
+
+                <div class="footer-socials">
+
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="Twitter"
+                        title="Twitter"
+                    >
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="WhatsApp"
+                        title="WhatsApp"
+                    >
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="social-link"
+                        aria-label="Instagram"
+                        title="Instagram"
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPLORE -->
+
+            <div class="footer-column">
+
+                <h3>Explore</h3>
+
+                <ul>
+
+                    <li>
+                        <a href="{% url 'home' %}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'university_list' %}">
+                            Universities
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'search' %}">
+                            Search
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'search' %}">
+                            Admission Updates
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'search' %}">
+                            Student Stories
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- STUDENT -->
+
+            <div class="footer-column">
+
+                <h3>Student</h3>
+
+                <ul>
+
+                    {% if user.is_authenticated %}
+
+                        <li>
+                            <a href="{% url 'dashboard' %}">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'profile' %}">
+                                My Profile
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'notification_list' %}">
+                                Notifications
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'create_post' %}">
+                                Create a Post
+                            </a>
+                        </li>
+
+                    {% else %}
+
+                        <li>
+                            <a href="{% url 'register' %}">
+                                Create Account
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'login' %}">
+                                Student Login
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                    <li>
+                        <a href="{% url 'university_list' %}">
+                            Find a University
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="footer-column">
+
+                <h3>Information</h3>
+
+                <ul>
+
+                    <li>
+                        <a href="#">
+                            About Scoolmasite
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            How it works
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Community Guidelines
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Privacy Policy
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Terms of Use
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <div class="footer-bottom-inner">
+
+            <p>
+                © {% now "Y" %} StudentMedia.
+                All rights reserved.
+            </p>
+
+            <div class="footer-bottom-links">
+
+                <a href="#">
+                    Privacy
+                </a>
+
+                <a href="#">
+                    Terms
+                </a>
+
+                <a href="#">
+                    Guidelines
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+    /*
+     * Automatically remove Django messages
+     * after 4 seconds.
+     */
+
+    setTimeout(function () {
+
+        const messages = document.getElementById("messages");
+
+        if (messages) {
+            messages.remove();
+        }
+
+    }, 4000);
+
+</script>
+
+<script>
+
+    const mobileMenuButton =
+        document.getElementById("mobileMenuButton");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const mobileMenuClose =
+        document.getElementById("mobileMenuClose");
+
+    const mobileMenuOverlay =
+        document.getElementById("mobileMenuOverlay");
+
+
+    function openMobileMenu() {
+
+        document.body.classList.add(
+            "mobile-menu-open"
+        );
+
+        mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        mobileMenu.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    function closeMobileMenu() {
+
+        document.body.classList.remove(
+            "mobile-menu-open"
+        );
+
+        mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        mobileMenu.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    mobileMenuButton.addEventListener(
+        "click",
+        openMobileMenu
+    );
+
+
+    mobileMenuClose.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    mobileMenuOverlay.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                document.body.classList.contains(
+                    "mobile-menu-open"
+                )
+            ) {
+                closeMobileMenu();
+            }
+
+        }
+    );
+
+
+    /*
+     * Close menu after selecting a link.
+     */
+
+    document.querySelectorAll(
+        ".mobile-nav a"
+    ).forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            closeMobileMenu
+        );
+
+    });
+
+</script>
+
+
+{% block page_js %}
+{% endblock %}
+
+</body>
+
+</html>

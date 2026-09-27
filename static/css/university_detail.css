@@ -1,0 +1,1143 @@
+/* =========================================================
+   UNIVERSITY DETAIL PAGE
+========================================================= */
+
+.university-page {
+    background: var(--surface);
+}
+
+
+/* =========================================================
+   UNIVERSITY HERO
+========================================================= */
+
+.university-hero {
+    position: relative;
+    background: var(--surface);
+}
+
+.university-cover {
+    position: relative;
+    height: 390px;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #32115f 0%,
+            #6d28d9 55%,
+            #7c3aed 100%
+        );
+}
+
+.university-cover > img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.university-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 80px;
+
+    background:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255,255,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #32115f,
+            #6d28d9,
+            #7c3aed
+        );
+}
+
+.university-cover-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(22, 10, 38, 0.05) 0%,
+            rgba(22, 10, 38, 0.10) 45%,
+            rgba(22, 10, 38, 0.58) 100%
+        );
+}
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.university-profile-container {
+    width: min(calc(100% - 32px), var(--container));
+    margin: -90px auto 0;
+    position: relative;
+    z-index: 5;
+}
+
+.university-profile-card {
+    display: flex;
+    gap: 28px;
+
+    padding: 28px;
+
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 18px 45px rgba(31, 20, 51, 0.12);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.university-logo-large {
+    width: 125px;
+    height: 125px;
+    flex-shrink: 0;
+
+    margin-top: -70px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+
+    background: white;
+    border: 6px solid white;
+    border-radius: 24px;
+
+    box-shadow:
+        0 12px 30px rgba(31, 20, 51, 0.15);
+}
+
+.university-logo-large img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.university-logo-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--purple-soft);
+    color: var(--purple);
+
+    font-size: 38px;
+}
+
+
+/* =========================================================
+   UNIVERSITY INFORMATION
+========================================================= */
+
+.university-main-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.university-title-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.university-name-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.university-name-line h1 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+}
+
+.university-short-name {
+    margin: 7px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.university-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #edf9f4;
+    color: var(--success);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.university-verified i {
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.university-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.university-meta span,
+.university-meta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.university-meta i {
+    color: var(--purple);
+}
+
+.university-meta a {
+    color: var(--purple);
+}
+
+.university-meta a:hover {
+    color: var(--purple-dark);
+}
+
+.university-description {
+    max-width: 780px;
+
+    margin: 18px 0 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   FOLLOW ACTIONS
+========================================================= */
+
+.university-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-top: 23px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+.university-followers {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.university-followers strong {
+    color: var(--ink);
+    font-size: 17px;
+}
+
+.university-followers span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.university-follow-button {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 18px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: var(--purple);
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px rgba(109, 40, 217, 0.18);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.university-follow-button:hover {
+    transform: translateY(-2px);
+    background: var(--purple-dark);
+    color: white;
+
+    box-shadow:
+        0 10px 24px rgba(109, 40, 217, 0.25);
+}
+
+.university-follow-button.following {
+    background: #edf9f4;
+    color: var(--success);
+    box-shadow: none;
+}
+
+.university-follow-button.following:hover {
+    background: #e1f5ed;
+    color: var(--success);
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.university-content {
+    width: min(calc(100% - 32px), var(--container));
+    margin: 0 auto;
+}
+
+.university-section {
+    padding: 88px 0 0;
+}
+
+.posts-section {
+    padding-bottom: 90px;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.university-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 32px;
+}
+
+.section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 9px;
+
+    color: var(--purple);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.university-section-heading h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.1;
+
+    letter-spacing: -1.2px;
+}
+
+.university-section-heading > div > p:last-child {
+    max-width: 650px;
+
+    margin: 12px 0 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.section-view-link {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--purple);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.section-view-link:hover {
+    color: var(--purple-dark);
+}
+
+.section-view-link i {
+    transition: transform .2s ease;
+}
+
+.section-view-link:hover i {
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   ADMISSION CARDS
+========================================================= */
+
+.admission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.admission-card-link {
+    display: block;
+    color: inherit;
+}
+
+.admission-card {
+    height: 100%;
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.admission-card-link:hover .admission-card {
+    transform: translateY(-5px);
+
+    border-color: #d8cdf0;
+
+    box-shadow: var(--shadow-md);
+}
+
+.admission-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 19px 19px 0;
+}
+
+.admission-icon {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: var(--purple-soft);
+    color: var(--purple);
+
+    font-size: 18px;
+}
+
+.admission-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    background: #edf9f4;
+    color: var(--success);
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.admission-card-body {
+    display: flex;
+    flex-direction: column;
+
+    padding: 19px;
+}
+
+.admission-session {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-bottom: 10px;
+
+    color: var(--purple);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.admission-card h3 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: 18px;
+    line-height: 1.35;
+
+    letter-spacing: -.35px;
+
+    display: -webkit-box;
+    /* -webkit-line-clamp: 2; */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.admission-card-body > p {
+    margin: 10px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.65;
+
+    display: -webkit-box;
+    /* -webkit-line-clamp: 3; */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.admission-details {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-top: 17px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.admission-details span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.admission-details i {
+    color: var(--purple);
+}
+
+.admission-details .deadline i {
+    color: var(--danger);
+}
+
+.admission-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 17px;
+
+    color: var(--purple);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.admission-card-footer i {
+    transition: transform .2s ease;
+}
+
+.admission-card-link:hover .admission-card-footer i {
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   STUDENT POST CARDS
+========================================================= */
+
+.university-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.university-post-link {
+    display: block;
+    color: inherit;
+}
+
+.university-post-card {
+    height: 100%;
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.university-post-link:hover .university-post-card {
+    transform: translateY(-5px);
+
+    border-color: #d8cdf0;
+
+    box-shadow: var(--shadow-md);
+}
+
+.university-post-image {
+    position: relative;
+
+    height: 205px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #32115f,
+            #7c3aed
+        );
+}
+
+.university-post-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform .4s ease;
+}
+
+.university-post-link:hover .university-post-image img {
+    transform: scale(1.05);
+}
+
+.post-image-placeholder {
+    display: grid;
+    place-items: center;
+
+    color: rgba(255,255,255,.8);
+
+    font-size: 40px;
+}
+
+.post-category {
+    position: absolute;
+
+    top: 13px;
+    left: 13px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.94);
+    color: var(--purple);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    box-shadow:
+        0 5px 14px rgba(20,10,40,.12);
+}
+
+
+/* =========================================================
+   POST CONTENT
+========================================================= */
+
+.university-post-body {
+    display: flex;
+    flex-direction: column;
+
+    padding: 18px 19px 17px;
+}
+
+.post-university-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 11px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-mini-icon {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 7px;
+
+    background: var(--purple-soft);
+    color: var(--purple);
+
+    font-size: 10px;
+}
+
+.university-post-body h3 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: 18px;
+    line-height: 1.35;
+
+    letter-spacing: -.35px;
+
+    display: -webkit-box;
+    /* -webkit-line-clamp: 2; */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.university-post-body > p {
+    margin: 10px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.65;
+
+    display: -webkit-box;
+    /* -webkit-line-clamp: 3; */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   POST AUTHOR
+========================================================= */
+
+.post-author-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 18px;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--border);
+}
+
+.post-author-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: var(--purple-soft);
+    color: var(--purple);
+
+    font-size: 11px;
+}
+
+.post-author-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.post-author-info {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.post-author-info strong {
+    color: var(--ink);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-author-info span {
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.post-statistics {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.post-statistics span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.post-statistics i {
+    color: var(--purple);
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.university-empty-state {
+    padding: 50px 25px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.empty-state-icon {
+    width: 54px;
+    height: 54px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 14px;
+
+    background: var(--purple-soft);
+    color: var(--purple);
+
+    font-size: 20px;
+}
+
+.university-empty-state h3 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: 17px;
+}
+
+.university-empty-state p {
+    max-width: 480px;
+
+    margin: 9px auto 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.empty-state-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 19px;
+    padding: 11px 16px;
+
+    border-radius: 9px;
+
+    background: var(--purple);
+    color: white;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.empty-state-button:hover {
+    background: var(--purple-dark);
+    color: white;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .university-cover {
+        height: 330px;
+    }
+
+    .university-profile-card {
+        gap: 22px;
+        padding: 24px;
+    }
+
+    .university-logo-large {
+        width: 105px;
+        height: 105px;
+
+        margin-top: -58px;
+    }
+
+    .admission-grid,
+    .university-posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .university-cover {
+        height: 245px;
+    }
+
+    .university-profile-container {
+        width: min(calc(100% - 24px), var(--container));
+
+        margin-top: -60px;
+    }
+
+    .university-profile-card {
+        display: block;
+
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .university-logo-large {
+        width: 90px;
+        height: 90px;
+
+        margin-top: -55px;
+
+        border-width: 5px;
+        border-radius: 18px;
+    }
+
+    .university-logo-placeholder {
+        font-size: 30px;
+    }
+
+    .university-main-info {
+        margin-top: 17px;
+    }
+
+    .university-name-line {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .university-name-line h1 {
+        font-size: 28px;
+        letter-spacing: -1px;
+    }
+
+    .university-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 9px;
+    }
+
+    .university-description {
+        font-size: 13px;
+    }
+
+    .university-actions {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 13px;
+    }
+
+    .university-followers {
+        justify-content: flex-start;
+    }
+
+    .university-follow-button {
+        width: 100%;
+    }
+
+    .university-content {
+        width: min(calc(100% - 24px), var(--container));
+    }
+
+    .university-section {
+        padding-top: 62px;
+    }
+
+    .posts-section {
+        padding-bottom: 65px;
+    }
+
+    .university-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+
+        margin-bottom: 25px;
+    }
+
+    .university-section-heading h2 {
+        font-size: 29px;
+    }
+
+    .university-section-heading > div > p:last-child {
+        font-size: 13px;
+    }
+
+    .admission-grid,
+    .university-posts-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .university-post-image {
+        height: 210px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .university-cover {
+        height: 220px;
+    }
+
+    .university-profile-card {
+        padding: 17px;
+    }
+
+    .university-name-line h1 {
+        font-size: 25px;
+    }
+
+    .university-section-heading h2 {
+        font-size: 27px;
+    }
+
+    .admission-card-body {
+        padding: 17px;
+    }
+
+    .university-post-body {
+        padding: 17px;
+    }
+
+    .post-statistics {
+        gap: 6px;
+    }
+
+}

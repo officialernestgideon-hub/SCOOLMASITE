@@ -1,0 +1,462 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block page_css %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}"> {% endblock %}
+
+{% block content %}
+
+<main class="profile-page">
+
+<section class="profile-hero">
+
+    <div class="profile-hero-content">
+
+        <div class="profile-avatar">
+
+            {% if profile.profile_picture %}
+
+                <img
+                    src="{{ profile.profile_picture.url }}"
+                    alt="{{ profile.user.username }}"
+                >
+
+            {% else %}
+
+                <span>
+                    {{ profile.user.username|first|upper }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="profile-heading">
+
+            <p class="profile-eyebrow">
+                <i class="fa-solid fa-user"></i>
+                MY PROFILE
+            </p>
+
+            <h1>
+                {{ profile.user.username }}
+            </h1>
+
+            {% if profile.university %}
+
+                <p class="profile-university">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    {{ profile.university.name }}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="profile-content">
+
+    <div class="profile-main">
+
+        <div class="profile-card">
+
+            <div class="profile-card-header">
+
+                <div>
+                    <p class="card-eyebrow">
+                        ABOUT ME
+                    </p>
+
+                    <h2>
+                        Profile information
+                    </h2>
+                </div>
+
+                <div class="profile-card-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+            </div>
+
+
+            <div class="profile-details">
+
+                <div class="profile-detail">
+
+                    <span class="detail-icon">
+                        <i class="fa-solid fa-at"></i>
+                    </span>
+
+                    <div>
+                        <span class="detail-label">
+                            Username
+                        </span>
+
+                        <strong>
+                            {{ profile.user.username }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <span class="detail-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+
+                    <div>
+                        <span class="detail-label">
+                            Email
+                        </span>
+
+                        <strong>
+                            {{ profile.user.email }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                {% if profile.university %}
+
+                <div class="profile-detail">
+
+                    <span class="detail-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </span>
+
+                    <div>
+                        <span class="detail-label">
+                            University
+                        </span>
+
+                        <strong>
+                            {{ profile.university.name }}
+                        </strong>
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if profile.location %}
+
+                <div class="profile-detail">
+
+                    <span class="detail-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </span>
+
+                    <div>
+                        <span class="detail-label">
+                            Location
+                        </span>
+
+                        <strong>
+                            {{ profile.location }}
+                        </strong>
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="profile-detail">
+
+                    <span class="detail-icon">
+                        <i class="fa-solid fa-user-tag"></i>
+                    </span>
+
+                    <div>
+                        <span class="detail-label">
+                            Account type
+                        </span>
+
+                        <strong>
+                            {{ profile.get_role_display }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-card-header">
+
+                <div>
+                    <p class="card-eyebrow">
+                        BIO
+                    </p>
+
+                    <h2>
+                        About you
+                    </h2>
+                </div>
+
+                <div class="profile-card-icon">
+                    <i class="fa-solid fa-pen"></i>
+                </div>
+
+            </div>
+
+            {% if profile.bio %}
+
+                <p class="profile-bio">
+                    {{ profile.bio }}
+                </p>
+
+            {% else %}
+
+                <div class="profile-empty">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <p>
+                        You haven't added a bio yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="profile-card">
+
+    <div class="profile-card-header">
+
+        <div>
+
+            <p class="card-eyebrow">
+                PROFILE SETTINGS
+            </p>
+
+            <h2>
+                Edit your profile
+            </h2>
+
+        </div>
+
+        <div class="profile-card-icon">
+            <i class="fa-solid fa-pen"></i>
+        </div>
+
+    </div>
+
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        class="profile-form"
+    >
+
+        {% csrf_token %}
+
+
+        <!-- UNIVERSITY -->
+
+        <div class="profile-form-group">
+
+            <label for="university">
+                University
+            </label>
+
+            <select
+                name="university"
+                id="university"
+            >
+
+                <option value="">
+                    Select your university
+                </option>
+
+                {% for university in universities %}
+
+                    <option
+                        value="{{ university.id }}"
+                        {% if profile.university.id == university.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ university.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <small>
+                Select the university you currently attend or are associated with.
+            </small>
+
+        </div>
+
+
+        <!-- ROLE -->
+
+        <div class="profile-form-group">
+
+            <label for="role">
+                Account type
+            </label>
+
+            <select
+                name="role"
+                id="role"
+            >
+
+                {% for value, label in profile.ROLE_CHOICES %}
+
+                    <option
+                        value="{{ value }}"
+                        {% if profile.role == value %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ label }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="profile-form-group">
+
+            <label for="location">
+                Location
+            </label>
+
+            <input
+                type="text"
+                name="location"
+                id="location"
+                value="{{ profile.location }}"
+                placeholder="e.g. Port Harcourt, Nigeria"
+            >
+
+        </div>
+
+
+        <!-- BIO -->
+
+        <div class="profile-form-group">
+
+            <label for="bio">
+                Bio
+            </label>
+
+            <textarea
+                name="bio"
+                id="bio"
+                rows="5"
+                placeholder="Tell other students a little about yourself..."
+            >{{ profile.bio }}</textarea>
+
+        </div>
+
+
+        <!-- PROFILE PICTURE -->
+
+        <div class="profile-form-group">
+
+            <label for="profile_picture">
+                Profile picture
+            </label>
+
+            <input
+                type="file"
+                name="profile_picture"
+                id="profile_picture"
+                accept="image/*"
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="profile-save-button"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Save changes
+        </button>
+
+    </form>
+
+</div>
+
+    </div>
+
+    
+
+
+    <aside class="profile-sidebar">
+
+        <div class="profile-side-card">
+
+            <div class="side-card-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <h3>
+                Student account
+            </h3>
+
+            <p>
+                Your StudentMedia profile connects you with universities,
+                admission updates and the student community.
+            </p>
+
+        </div>
+
+
+        {% if profile.is_verified %}
+
+        <div class="verification-card">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <div>
+                <strong>
+                    Verified profile
+                </strong>
+
+                <span>
+                    Your student profile is verified.
+                </span>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </aside>
+
+</section>
+
+</main>
+
+{% endblock %}

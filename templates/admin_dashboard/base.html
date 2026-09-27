@@ -1,0 +1,245 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}Admin Dashboard{% endblock %}
+        | SCOOLMASITE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/admin_dashboard.css' %}"
+    >
+
+    {% block page_css %}{% endblock %}
+
+</head>
+
+
+<body>
+
+<div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar" id="adminSidebar">
+
+        <div class="admin-logo">
+
+            <span class="logo-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+
+            <span>
+                SCOOLMA<span>SITE</span>
+            </span>
+
+        </div>
+
+
+        <nav class="admin-nav">
+
+            <p class="nav-label">MAIN</p>
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'admin_dashboard' %}"
+                class="{% block dashboard_active %}{% endblock %}"
+            >
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- ANALYTICS -->
+
+            <a
+                href="{% url 'admin_analytics' %}"
+                class="{% block analytics_active %}{% endblock %}"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+
+            <p class="nav-label">MANAGEMENT</p>
+
+
+            <a
+                href="{% url 'admin_users' %}"
+                class="{% block users_active %}{% endblock %}"
+            >
+                <i class="fa-solid fa-users"></i>
+                <span>Users</span>
+            </a>
+
+
+            <a href="#">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Admissions</span>
+            </a>
+
+
+            <a href="#">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>Student Posts</span>
+            </a>
+
+
+            <a href="#">
+                <i class="fa-solid fa-tags"></i>
+                <span>Categories</span>
+            </a>
+
+
+            <a href="#">
+                <i class="fa-solid fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+
+            <p class="nav-label">SYSTEM</p>
+
+
+            <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+
+            <a href="{% url 'home' %}">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Website</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- TOPBAR -->
+
+    <div class="admin-workspace">
+
+    <!-- TOPBAR -->
+
+    <header class="admin-topbar">
+
+        <button
+            type="button"
+            class="sidebar-toggle"
+            id="sidebarToggle"
+        >
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+
+        <div class="topbar-title">
+
+            <span class="topbar-eyebrow">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                {% block page_heading %}
+                    Dashboard
+                {% endblock %}
+            </h1>
+
+            <p>
+                Welcome back,
+                {{ request.user.first_name|default:request.user.username }}.
+                Here's what's happening on SCOOLMASITE.
+            </p>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <button
+                type="button"
+                class="topbar-icon"
+            >
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-dot"></span>
+            </button>
+
+
+            <div class="admin-user">
+
+                <div class="admin-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+
+                <div class="admin-user-info">
+
+                    {% if request.user.first_name %}
+
+                        <strong>
+                            {{ request.user.first_name }}
+                            {{ request.user.last_name }}
+                        </strong>
+
+                    {% else %}
+
+                        <strong>
+                            {{ request.user.username }}
+                        </strong>
+
+                    {% endif %}
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+
+    <main class="admin-main">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+  </div>
+</div>
+
+
+{% block page_js %}
+{% endblock %}
+
+
+</body>
+
+</html>
+

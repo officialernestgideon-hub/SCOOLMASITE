@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Universities
+{% endblock %}
+
+{% block page_css %}
+
+<link rel="stylesheet" href="{% static 'css/university-list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="universities-page">
+
+<!-- =========================================
+     DISCOVERY HERO
+========================================== -->
+<section class="universities-hero">
+
+    <div class="universities-hero-pattern"></div>
+
+    <div class="universities-hero-content">
+
+        <p class="universities-eyebrow">
+            <i class="fa-solid fa-building-columns"></i>
+            UNIVERSITY DISCOVERY
+        </p>
+
+        <h1>
+            Find your university.
+        </h1>
+
+        <p>
+            Explore universities, discover campus communities,
+            and stay informed about admission opportunities.
+        </p>
+
+        <!-- Search -->
+        {% comment %} <form
+            method="GET"
+            class="universities-search"
+        >
+
+            <div class="universities-search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search universities..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Search
+            </button>
+
+        </form> {% endcomment %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     UNIVERSITY DIRECTORY
+========================================== -->
+<section class="universities-directory">
+
+    <div class="universities-directory-header">
+
+        <div>
+
+            <p class="section-eyebrow">
+                <i class="fa-solid fa-compass"></i>
+                EXPLORE
+            </p>
+
+            <h2>
+                {% if query %}
+                    Search results
+                {% else %}
+                    Discover Universities
+                {% endif %}
+            </h2>
+
+            {% if query %}
+
+                <p>
+                    Showing universities matching
+                    <strong>"{{ query }}"</strong>
+                </p>
+
+            {% else %}
+
+                <p>
+                    Browse universities and explore their
+                    student communities and admission information.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        {% if universities %}
+
+            <div class="university-result-count">
+
+                <i class="fa-solid fa-building-columns"></i>
+
+                <span>
+                    {{ universities|length }}
+                    {% if universities|length == 1 %}
+                        university
+                    {% else %}
+                        universities
+                    {% endif %}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================
+         UNIVERSITY GRID
+    ====================================== -->
+    {% if universities %}
+
+        <div class="university-directory-grid">
+
+            {% for university in universities %}
+
+                <a
+                    href="{% url 'university_detail' university.id %}"
+                    class="directory-card-link"
+                >
+
+                    <article class="directory-card">
+
+                        <!-- Cover -->
+                        <div class="directory-card-cover">
+
+                            {% if university.cover_image %}
+
+                                <img
+                                    src="{{ university.cover_image.url }}"
+                                    alt="{{ university.name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="directory-cover-placeholder">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if university.is_verified %}
+
+                                <span class="directory-verified">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    Verified
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- University body -->
+                        <div class="directory-card-body">
+
+                            <!-- Logo -->
+                            <div class="directory-logo">
+
+                                {% if university.logo %}
+
+                                    <img
+                                        src="{{ university.logo.url }}"
+                                        alt="{{ university.name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="directory-logo-placeholder">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="directory-info">
+
+                                <h3>
+                                    {{ university.name }}
+                                </h3>
+
+                                {% if university.short_name %}
+
+                                    <span class="directory-short-name">
+                                        {{ university.short_name }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                <!-- Location -->
+                                <div class="directory-location">
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    <span>
+
+                                        {% if university.city %}
+                                            {{ university.city }},
+                                        {% endif %}
+
+                                        {% if university.state %}
+                                            {{ university.state }},
+                                        {% endif %}
+
+                                        {{ university.country }}
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Description -->
+                                {% if university.description %}
+
+                                    <p class="directory-description">
+                                        {{ university.description|truncatewords:18 }}
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="directory-description directory-description-empty">
+                                        Explore this university's
+                                        campus community and admission updates.
+                                    </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- Footer -->
+                            <div class="directory-card-footer">
+
+                                <span>
+                                    Explore university
+                                </span>
+
+                                <span class="directory-arrow">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <!-- =================================
+             EMPTY SEARCH STATE
+        ================================== -->
+        <div class="universities-empty">
+
+            <div class="universities-empty-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <h3>
+                No universities found
+            </h3>
+
+            {% if query %}
+
+                <p>
+                    We couldn't find a university matching
+                    <strong>"{{ query }}"</strong>.
+                    Try another name or search term.
+                </p>
+
+                <a
+                    href="{% url 'university_list' %}"
+                    class="empty-reset-button"
+                >
+                    <i class="fa-solid fa-rotate-left"></i>
+                    View all universities
+                </a>
+
+            {% else %}
+
+                <p>
+                    University profiles will appear here
+                    as they are added to StudentMedia.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+</main>
+
+{% endblock %}
+{% block page_footer %}{% endblock  %}

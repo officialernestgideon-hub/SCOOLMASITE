@@ -1,0 +1,786 @@
+{% extends "admin_dashboard/base.html" %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block dashboard_active %}active{% endblock %}
+
+{% block page_heading %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+        <!-- CONTENT -->
+
+        <section class="dashboard-content">
+
+
+            <!-- MAIN STATS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card stat-card-primary">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon users">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            TOTAL USERS
+                        </span>
+
+                    </div>
+
+                    <strong class="stat-number">
+                        {{ total_users }}
+                    </strong>
+
+                    <div class="stat-footer">
+                        <span>
+                            <i class="fa-solid fa-arrow-up"></i>
+                            Registered accounts
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon universities">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            UNIVERSITIES
+                        </span>
+
+                    </div>
+
+                    <strong class="stat-number">
+                        {{ total_universities }}
+                    </strong>
+
+                    <div class="stat-footer">
+                        <span>
+                            <i class="fa-solid fa-building"></i>
+                            Platform institutions
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon admissions">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            ADMISSIONS
+                        </span>
+
+                    </div>
+
+                    <strong class="stat-number">
+                        {{ total_admissions }}
+                    </strong>
+
+                    <div class="stat-footer">
+                        <span>
+                            <i class="fa-solid fa-bullhorn"></i>
+                            Admission updates
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon posts">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            STUDENT POSTS
+                        </span>
+
+                    </div>
+
+                    <strong class="stat-number">
+                        {{ total_posts }}
+                    </strong>
+
+                    <div class="stat-footer">
+                        <span>
+                            <i class="fa-solid fa-comments"></i>
+                            Community content
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- MAIN DASHBOARD ROW -->
+
+            <div class="dashboard-main-grid">
+
+
+                <!-- VISITOR ANALYTICS -->
+
+                <section class="visitor-card">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                VISITOR ANALYTICS
+                            </span>
+
+                            <h2>Website Activity</h2>
+
+                            <p>
+                                Visitor activity will appear here once
+                                tracking is connected.
+                            </p>
+
+                        </div>
+
+
+                        <div class="chart-controls">
+
+                            <button class="chart-period active">
+                                7D
+                            </button>
+
+                            <button class="chart-period">
+                                30D
+                            </button>
+
+                            <button class="chart-period">
+                                3M
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="visitor-summary">
+
+                        <div class="visitor-stat">
+                            <span>Visitors Today</span>
+                            <strong>{{ visitors_today }}</strong>
+                        </div>
+
+                        <div class="visitor-stat">
+                            <span>Page Views</span>
+                            <strong>{{ page_views_today }}</strong>
+                        </div>
+
+                        <div class="visitor-stat">
+                            <span>Returning Visitors</span>
+                            <strong>{{ returning_visitors_today }}</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="visitor-chart">
+
+                        {% for item in visitor_trend %}
+
+                            <div class="chart-column">
+
+                                <div
+                                    class="chart-bar"
+                                    style="height: {% widthratio item.visitors 1 20 %}px;"
+                                    title="{{ item.visitors }} visitors"
+                                ></div>
+
+                                <span>{{ item.date }}</span>
+
+                            </div>
+
+                        {% empty %}
+
+                            <p class="empty-state">
+                                Visitor activity will appear here as people visit the site.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+
+                <!-- QUICK OVERVIEW -->
+
+                <section class="overview-card">
+
+                    <div class="section-heading compact">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                PLATFORM
+                            </span>
+
+                            <h2>Quick Overview</h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-list">
+
+
+                        <div class="overview-item">
+
+                            <div class="overview-icon students">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+
+                            <div class="overview-info">
+
+                                <span>Students</span>
+
+                                <strong>
+                                    {{ total_students }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="overview-item">
+
+                            <div class="overview-icon categories">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+
+                            <div class="overview-info">
+
+                                <span>Categories</span>
+
+                                <strong>
+                                    {{ total_categories }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="overview-item">
+
+                            <div class="overview-icon verified">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+
+                            <div class="overview-info">
+
+                                <span>Verified Students</span>
+
+                                <strong>
+                                    {{ verified_students }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="overview-item">
+
+                            <div class="overview-icon verified">
+                                <i class="fa-solid fa-shield-check"></i>
+                            </div>
+
+                            <div class="overview-info">
+
+                                <span>Verified Universities</span>
+
+                                <strong>
+                                    {{ verified_universities }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="overview-item">
+
+                            <div class="overview-icon admissions">
+                                <i class="fa-solid fa-file-circle-check"></i>
+                            </div>
+
+                            <div class="overview-info">
+
+                                <span>Verified Admissions</span>
+
+                                <strong>
+                                    {{ verified_admissions }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- ACTIONS + ALERTS -->
+
+            <div class="action-alert-grid">
+
+
+                <!-- QUICK ACTIONS -->
+
+                <section class="quick-actions-card">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                SHORTCUTS
+                            </span>
+
+                            <h2>Quick Actions</h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+                        <a href="#" class="quick-action">
+
+                            <span class="quick-action-icon">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </span>
+
+                            <span>
+                                Add University
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a href="#" class="quick-action">
+
+                            <span class="quick-action-icon">
+                                <i class="fa-solid fa-file-circle-plus"></i>
+                            </span>
+
+                            <span>
+                                Add Admission
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a href="#" class="quick-action">
+
+                            <span class="quick-action-icon">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </span>
+
+                            <span>
+                                Manage Users
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a href="#" class="quick-action">
+
+                            <span class="quick-action-icon">
+                                <i class="fa-solid fa-newspaper"></i>
+                            </span>
+
+                            <span>
+                                Review Posts
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ALERTS -->
+
+                <section class="alerts-card">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                ATTENTION
+                            </span>
+
+                            <h2>Platform Health</h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="health-list">
+
+
+                        <div class="health-item">
+
+                            <div class="health-icon success">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verified Students
+                                </strong>
+
+                                <span>
+                                    {{ verified_students }} verified
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-item">
+
+                            <div class="health-icon success">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Verified Universities
+                                </strong>
+
+                                <span>
+                                    {{ verified_universities }} verified
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-item">
+
+                            <div class="health-icon warning">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Content Review
+                                </strong>
+
+                                <span>
+                                    Review workflow coming next
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- RECENT ACTIVITY -->
+
+            <section class="recent-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            RECENT ACTIVITY
+                        </span>
+
+                        <h2>What's New</h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity-grid">
+
+
+                    <!-- USERS -->
+
+                    <div class="activity-card">
+
+                        <div class="activity-card-heading">
+
+                            <h3>Recent Users</h3>
+
+                            <a href="#">
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        {% for user in recent_users %}
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        {{ user.username }}
+                                    </strong>
+
+                                    <span>
+                                        Joined
+                                        {{ user.date_joined|date:"M d, Y" }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        {% empty %}
+
+                            <div class="empty-activity">
+                                No users yet.
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- UNIVERSITIES -->
+
+                    <div class="activity-card">
+
+                        <div class="activity-card-heading">
+
+                            <h3>Recent Universities</h3>
+
+                            <a href="#">
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        {% for university in recent_universities %}
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon university-icon">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        {{ university.name }}
+                                    </strong>
+
+                                    <span>
+                                        {{ university.country }}
+                                        {% if university.state %}
+                                            · {{ university.state }}
+                                        {% endif %}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        {% empty %}
+
+                            <div class="empty-activity">
+                                No universities yet.
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ADMISSIONS -->
+
+                    <div class="activity-card">
+
+                        <div class="activity-card-heading">
+
+                            <h3>Recent Admissions</h3>
+
+                            <a href="#">
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        {% for admission in recent_admissions %}
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon admission-icon">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        {{ admission.title }}
+                                    </strong>
+
+                                    <span>
+                                        {{ admission.university }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        {% empty %}
+
+                            <div class="empty-activity">
+                                No admission updates yet.
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- POSTS -->
+
+                    <div class="activity-card">
+
+                        <div class="activity-card-heading">
+
+                            <h3>Recent Posts</h3>
+
+                            <a href="#">
+                                View all
+                            </a>
+
+                        </div>
+
+
+                        {% for post in recent_posts %}
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon post-icon">
+                                    <i class="fa-solid fa-newspaper"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        {{ post.title }}
+                                    </strong>
+
+                                    <span>
+                                        {{ post.author.username }}
+                                        ·
+                                        {{ post.created_at|date:"M d" }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        {% empty %}
+
+                            <div class="empty-activity">
+                                No posts yet.
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </section>
+
+{% block page_js %}
+<script>
+
+const toggle = document.getElementById("sidebarToggle");
+const sidebar = document.getElementById("adminSidebar");
+
+toggle.addEventListener("click", function () {
+
+    sidebar.classList.toggle("open");
+
+});
+
+</script>
+{% endblock %}
+
+
+{% endblock  %}

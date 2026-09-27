@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ admission.title }}
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/admission-detail.css' %}"> {% endblock %}
+{% block content %}
+
+<main class="admission-page">
+
+<div class="admission-container">
+
+    <!-- BACK LINK -->
+    <a
+        href="{% url 'university_detail' admission.university.id %}"
+        class="admission-back"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to university
+    </a>
+
+
+    <!-- UNIVERSITY HEADER -->
+    <section class="admission-university">
+
+        <div class="university-brand">
+
+            {% if admission.university.logo %}
+                <img
+                    src="{{ admission.university.logo.url }}"
+                    alt="{{ admission.university.name }}"
+                    class="university-logo"
+                >
+            {% else %}
+                <div class="university-logo university-logo-placeholder">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+            {% endif %}
+
+            <div class="university-details">
+
+                <span class="section-label">
+                    University
+                </span>
+
+                <h2>
+                    {{ admission.university.name }}
+                </h2>
+
+                {% if admission.university.city or admission.university.state %}
+                    <p>
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        {% if admission.university.city %}
+                            {{ admission.university.city }}
+                        {% endif %}
+
+                        {% if admission.university.city and admission.university.state %}
+                            ,
+                        {% endif %}
+
+                        {% if admission.university.state %}
+                            {{ admission.university.state }}
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% if admission.is_verified %}
+            <div class="verified-badge">
+                <i class="fa-solid fa-circle-check"></i>
+                Verified update
+            </div>
+        {% endif %}
+
+    </section>
+
+
+    <!-- ADMISSION TITLE -->
+    <section class="admission-heading">
+
+        <span class="admission-eyebrow">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Admission Update
+        </span>
+
+        <h1>
+            {{ admission.title }}
+        </h1>
+
+        <p class="published-date">
+            Published {{ admission.created_at|date:"F d, Y" }}
+        </p>
+
+    </section>
+
+
+    <!-- IMPORTANT DATES -->
+    {% if admission.admission_session or admission.application_start or admission.application_deadline %}
+
+        <section class="admission-info">
+
+            {% if admission.admission_session %}
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                    <div>
+                        <span>Admission Session</span>
+                        <strong>
+                            {{ admission.admission_session }}
+                        </strong>
+                    </div>
+
+                </div>
+            {% endif %}
+
+
+            {% if admission.application_start %}
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                    </div>
+
+                    <div>
+                        <span>Application Opens</span>
+                        <strong>
+                            {{ admission.application_start|date:"F d, Y" }}
+                        </strong>
+                    </div>
+
+                </div>
+            {% endif %}
+
+
+            {% if admission.application_deadline %}
+                <div class="info-card deadline-card">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+
+                    <div>
+                        <span>Application Deadline</span>
+                        <strong>
+                            {{ admission.application_deadline|date:"F d, Y" }}
+                        </strong>
+                    </div>
+
+                </div>
+            {% endif %}
+
+        </section>
+
+    {% endif %}
+
+
+    <!-- MAIN INFORMATION -->
+    <article class="admission-content">
+
+        <div class="content-header">
+            <div class="content-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+
+            <div>
+                <span class="section-label">
+                    Details
+                </span>
+
+                <h2>
+                    Admission Information
+                </h2>
+            </div>
+        </div>
+
+        <div class="content-body">
+            {{ admission.content|linebreaks }}
+        </div>
+
+    </article>
+
+
+    <!-- OFFICIAL APPLICATION -->
+    {% if admission.official_link %}
+
+        <section class="official-application">
+
+            <div class="official-icon">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+
+            <div class="official-content">
+
+                <span class="section-label">
+                    Official Source
+                </span>
+
+                <h2>
+                    Apply through the official portal
+                </h2>
+
+                <p>
+                    Always confirm admission requirements, deadlines,
+                    fees, and application instructions on the university's
+                    official website before applying.
+                </p>
+
+                <a
+                    href="{{ admission.official_link }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="official-button"
+                >
+                    Visit Official Application Portal
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+    <!-- UNIVERSITY ACTION -->
+    <div class="admission-actions">
+
+        <a
+            href="{% url 'university_detail' admission.university.id %}"
+            class="university-button"
+        >
+            <i class="fa-solid fa-building-columns"></i>
+
+            View
+            {{ admission.university.name }}
+
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+</div>
+
+</main>
+{% block footer %}
+{% endblock  %}
+
+{% endblock %}
+{% comment %} {% block footer %}{% endblock  %} {% endcomment %}

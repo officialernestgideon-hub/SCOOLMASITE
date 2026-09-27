@@ -1,0 +1,341 @@
+{% extends "admin_dashboard/base.html" %}
+{% load static %}
+
+{% block title %}
+Users
+{% endblock %}
+
+{% block page_heading %}
+Users
+{% endblock %}
+
+{% block users_active %}
+active
+{% endblock %}
+
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin_users.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="users-content">
+
+    <!-- PAGE INTRO -->
+
+    <div class="users-intro">
+
+        <div>
+            <span class="section-eyebrow">
+                USER MANAGEMENT
+            </span>
+
+            <h2>
+                Platform Users
+            </h2>
+
+            <p>
+                Manage students, applicants, alumni and administrators.
+            </p>
+        </div>
+
+        <div class="users-total">
+            <i class="fa-solid fa-users"></i>
+
+            <div>
+                <strong>{{ users|length }}</strong>
+                <span>Total users</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH / FILTER BAR -->
+
+    <section class="users-toolbar">
+
+        <form method="get" class="users-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="search"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Search users by name, username or email..."
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- USERS TABLE -->
+
+    <section class="users-table-card">
+
+        <div class="table-header">
+
+            <div>
+                <span>ACCOUNT DIRECTORY</span>
+
+                <h3>
+                    All Users
+                </h3>
+            </div>
+
+            <span class="user-count">
+                {{ users|length }} users
+            </span>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            User
+                        </th>
+
+                        <th>
+                            University
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Joined
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+
+                        <!-- USER -->
+
+                        <td>
+
+                            <div class="user-cell">
+
+                                <div class="user-avatar">
+
+                                    {% if user.first_name %}
+
+                                        {{ user.first_name|first|upper }}
+
+                                    {% else %}
+
+                                        {{ user.username|first|upper }}
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="user-info">
+
+                                    <strong>
+
+                                        {% if user.get_full_name %}
+
+                                            {{ user.get_full_name }}
+
+                                        {% else %}
+
+                                            {{ user.username }}
+
+                                        {% endif %}
+
+                                    </strong>
+
+                                    <span>
+                                        {{ user.email|default:"No email" }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- UNIVERSITY -->
+
+                        <td>
+
+                            {% if user.student_profile.university %}
+
+                                <span class="university-name">
+                                    {{ user.student_profile.university.short_name|default:user.student_profile.university.name }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="muted">
+                                    Not assigned
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ROLE -->
+
+                        <td>
+
+                            {% if user.is_staff %}
+
+                                <span class="role-badge admin">
+                                    Administrator
+                                </span>
+
+                            {% elif user.student_profile.role == "applicant" %}
+
+                                <span class="role-badge applicant">
+                                    Applicant
+                                </span>
+
+                            {% elif user.student_profile.role == "alumni" %}
+
+                                <span class="role-badge alumni">
+                                    Alumni
+                                </span>
+
+                            {% else %}
+
+                                <span class="role-badge student">
+                                    Student
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if user.is_active %}
+
+                                <span class="status-badge active">
+                                    <i class="fa-solid fa-circle"></i>
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge inactive">
+                                    <i class="fa-solid fa-circle"></i>
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- JOINED -->
+
+                        <td>
+
+                            <span class="joined-date">
+                                {{ user.date_joined|date:"M d, Y" }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <a
+                                href="#"
+                                class="user-action"
+                                title="View user"
+                            >
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="users-empty"
+                        >
+
+                            <div>
+
+                                <i class="fa-solid fa-users"></i>
+
+                                <h3>
+                                    No users found
+                                </h3>
+
+                                <p>
+                                    There are no users to display yet.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}
