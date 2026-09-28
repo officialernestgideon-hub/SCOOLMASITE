@@ -3,7 +3,8 @@ from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.utils import timezone
 
 from accounts.models import StudentProfile
@@ -474,4 +475,179 @@ def users(request):
         request,
         "admin_dashboard/users.html",
         context
+    )
+    
+@login_required
+def user_detail(request, user_id):
+
+    if not request.user.is_staff:
+        return render(
+            request,
+            "admin_dashboard/no_access.html",
+            status=403
+        )
+
+    user = get_object_or_404(
+        User.objects.select_related(
+            "student_profile",
+            "student_profile__university",
+        ),
+        id=user_id
+    )
+
+    if request.method == "POST":
+
+        action = request.POST.get("action")
+
+        # -----------------------------
+        # EDIT USER
+        # -----------------------------
+        if action == "edit_user":
+
+            first_name = request.POST.get(
+                "first_name", ""
+            ).strip()
+
+            last_name = request.POST.get(
+                "last_name", ""
+            ).strip()
+
+            email = request.POST.get(
+                "email", ""
+            ).strip()
+
+            username = request.POST.get(
+                "username", ""
+            ).strip()
+
+            location = request.POST.get(
+                "location", ""
+            ).strip()
+
+            bio = request.POST.get(
+                "bio", ""
+            ).strip()
+
+            if not username:
+                messages.error(
+                    request,
+                    "Username cannot be empty."
+                )
+
+            elif User.objects.filter(
+                username=username
+            ).exclude(id=user.id).exists():
+
+                messages.error(
+                    request,
+                    "That username is already in use."
+                )
+
+            elif email and User.objects.filter(
+                email=email
+            ).exclude(id=user.id).exists():
+
+                messages.error(
+                    request,
+                    "That email address is already in use."
+                )
+
+            else:
+
+                user.username = username
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.save()
+
+                profile = user.student_profile
+                profile.location = location
+                profile.bio = bio
+                profile.save()
+
+                messages.success(
+                    request,
+                    f"{user.username}'s account has been updated."
+                )
+
+                return redirect(
+                    "admin_user_detail",
+                    user_id=user.id
+                )
+
+
+        # -----------------------------
+        # VERIFY / UNVERIFY USER
+        # -----------------------------
+        elif action == "toggle_verification":
+
+            profile = user.student_profile
+
+            profile.is_verified = not profile.is_verified
+            profile.save()
+
+            if profile.is_verified:
+
+                messages.success(
+                    request,
+                    f"{user.username} has been verified."
+                )
+
+            else:
+
+                messages.success(
+                    request,
+                    f"Verification removed from {user.username}."
+                )
+
+            return redirect(
+                "admin_user_detail",
+                user_id=user.id
+            )
+
+
+        # -----------------------------
+        # ACTIVATE / DEACTIVATE USER
+        # -----------------------------
+        elif action == "toggle_active":
+
+            # Prevent an admin from disabling
+            # their own account accidentally.
+            if user.id == request.user.id:
+
+                messages.error(
+                    request,
+                    "You cannot deactivate your own admin account."
+                )
+
+            else:
+
+                user.is_active = not user.is_active
+                user.save()
+
+                if user.is_active:
+
+                    messages.success(
+                        request,
+                        f"{user.username}'s account has been activated."
+                    )
+
+                else:
+
+                    messages.success(
+                        request,
+                        f"{user.username}'s account has been deactivated."
+                    )
+
+            return redirect(
+                "admin_user_detail",
+                user_id=user.id
+            )
+
+    return render(
+        request,
+        "admin_dashboard/user_detail.html",
+        {
+            "user_account": user,
+        }
     )

@@ -11,4 +11,10 @@ urlpatterns = [
         views.users,
         name="admin_users"
     ),
+    
+    path(
+        "users/<int:user_id>/",
+        views.user_detail,
+        name="admin_user_detail"
+    ),
 ]

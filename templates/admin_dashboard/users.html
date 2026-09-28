@@ -37,9 +37,9 @@ active
                 USER MANAGEMENT
             </span>
 
-            <h2>
+            {% comment %} <h2>
                 Platform Users
-            </h2>
+            </h2> {% endcomment %}
 
             <p>
                 Manage students, applicants, alumni and administrators.
@@ -287,7 +287,7 @@ active
                         <td>
 
                             <a
-                                href="#"
+                                href="{% url "admin_user_detail" user.id %}"
                                 class="user-action"
                                 title="View user"
                             >

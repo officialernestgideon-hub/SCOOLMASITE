@@ -1,0 +1,538 @@
+{% extends "admin_dashboard/base.html" %}
+{% load static %}
+
+{% block title %}
+User Details
+{% endblock %}
+{% block page_heading %}
+Users Detail
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/admin_user_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="user-detail-page">                    
+
+    <div class="user-detail-back">
+        <a href="{% url 'admin_users' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Users
+        </a>
+    </div>
+
+    <!-- PROFILE HEADER -->
+    <section class="user-profile-header">
+
+        <div class="user-profile-avatar">
+            {% if user_account.student_profile.profile_picture %}
+                <img
+                    src="{{ user_account.student_profile.profile_picture.url }}"
+                    alt="{{ user_account.username }}"
+                >
+            {% else %}
+                {{ user_account.username|first|upper }}
+            {% endif %}
+        </div>
+
+        <div class="user-profile-heading">
+
+            <div class="user-profile-name-row">
+                <h1>
+                    {% if user_account.first_name or user_account.last_name %}
+                        {{ user_account.first_name }}
+                        {{ user_account.last_name }}
+                    {% else %}
+                        {{ user_account.username }}
+                    {% endif %}
+                </h1>
+
+                {% if user_account.is_active %}
+                    <span class="status-badge active">
+                        <i class="fa-solid fa-circle"></i>
+                        Active
+                    </span>
+                {% else %}
+                    <span class="status-badge inactive">
+                        <i class="fa-solid fa-circle"></i>
+                        Inactive
+                    </span>
+                {% endif %}
+            </div>
+
+            <p class="user-username">
+                @{{ user_account.username }}
+            </p>
+
+            <p class="user-email">
+                <i class="fa-regular fa-envelope"></i>
+                {{ user_account.email|default:"No email provided" }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="user-detail-grid">
+
+        <!-- LEFT -->
+        <div class="user-detail-main">
+
+            <section class="detail-card">
+
+                <div class="detail-card-heading">
+                    <div>
+                        <span>PROFILE</span>
+                        <h2>Personal Information</h2>
+                    </div>
+
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="detail-info-grid">
+
+                    <div class="detail-info-item">
+                        <span>Username</span>
+                        <strong>{{ user_account.username }}</strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Email</span>
+                        <strong>
+                            {{ user_account.email|default:"Not provided" }}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>First Name</span>
+                        <strong>
+                            {{ user_account.first_name|default:"Not provided" }}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Last Name</span>
+                        <strong>
+                            {{ user_account.last_name|default:"Not provided" }}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Location</span>
+                        <strong>
+                            {{ user_account.student_profile.location|default:"Not provided" }}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Joined</span>
+                        <strong>
+                            {{ user_account.date_joined|date:"M d, Y" }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="detail-card">
+
+                <div class="detail-card-heading">
+                    <div>
+                        <span>STUDENT PROFILE</span>
+                        <h2>Academic Information</h2>
+                    </div>
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+
+                <div class="detail-info-grid">
+
+                    <div class="detail-info-item">
+                        <span>University</span>
+
+                        <strong>
+                            {% if user_account.student_profile.university %}
+                                {{ user_account.student_profile.university.name }}
+                            {% else %}
+                                Not assigned
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Role</span>
+
+                        <strong>
+                            {% if user_account.student_profile.role == "applicant" %}
+                                Admission Applicant
+                            {% elif user_account.student_profile.role == "alumni" %}
+                                Alumni
+                            {% else %}
+                                Student
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span>Verification</span>
+
+                        {% if user_account.student_profile.is_verified %}
+                            <strong class="verified-text">
+                                <i class="fa-solid fa-circle-check"></i>
+                                Verified
+                            </strong>
+                        {% else %}
+                            <strong class="unverified-text">
+                                Not verified
+                            </strong>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                {% if user_account.student_profile.bio %}
+                    <div class="user-bio">
+                        <span>Bio</span>
+                        <p>
+                            {{ user_account.student_profile.bio }}
+                        </p>
+                    </div>
+                {% endif %}
+
+            </section>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <aside class="user-detail-sidebar">
+
+            <section class="detail-card admin-actions-card">
+
+                <div class="detail-card-heading">
+                    <div>
+                        <span>ADMINISTRATION</span>
+                        <h2>Account Actions</h2>
+                    </div>
+
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div class="admin-action-list">
+
+                    <button
+                        type="button"
+                        class="admin-action"
+                        onclick="document.getElementById('editUserModal').classList.add('show')"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+
+                        <span>
+                            <strong>Edit User</strong>
+                            <small>Update account information</small>
+                        </span>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="toggle_verification"
+                            >
+
+                            <button type="submit" class="admin-action">
+
+                                {% if user_account.student_profile.is_verified %}
+
+                                    <i class="fa-solid fa-circle-xmark"></i>
+
+                                    <span>
+                                        <strong>Remove Verification</strong>
+                                        <small>
+                                            Remove student verification
+                                        </small>
+                                    </span>
+
+                                {% else %}
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    <span>
+                                        <strong>Verify User</strong>
+                                        <small>
+                                            Mark this student as verified
+                                        </small>
+                                    </span>
+
+                                {% endif %}
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+                        </form>
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="toggle_active"
+                            >
+
+                            <button
+                                type="submit"
+                                class="admin-action {% if user_account.is_active %}warning{% endif %}"
+                            >
+
+                                {% if user_account.is_active %}
+
+                                    <i class="fa-solid fa-user-slash"></i>
+
+                                    <span>
+                                        <strong>Deactivate Account</strong>
+                                        <small>
+                                            Prevent account access
+                                        </small>
+                                    </span>
+
+                                {% else %}
+
+                                    <i class="fa-solid fa-user-check"></i>
+
+                                    <span>
+                                        <strong>Activate Account</strong>
+                                        <small>
+                                            Restore account access
+                                        </small>
+                                    </span>
+
+                                {% endif %}
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+                        </form>
+
+                </div>
+
+            </section>
+
+
+            <section class="detail-card account-status-card">
+
+                <div class="detail-card-heading">
+                    <div>
+                        <span>ACCOUNT</span>
+                        <h2>Account Status</h2>
+                    </div>
+                </div>
+
+                <div class="account-status-row">
+                    <span>Staff</span>
+
+                    {% if user_account.is_staff %}
+                        <strong class="yes">Yes</strong>
+                    {% else %}
+                        <strong>No</strong>
+                    {% endif %}
+                </div>
+
+                <div class="account-status-row">
+                    <span>Superuser</span>
+
+                    {% if user_account.is_superuser %}
+                        <strong class="yes">Yes</strong>
+                    {% else %}
+                        <strong>No</strong>
+                    {% endif %}
+                </div>
+
+                <div class="account-status-row">
+                    <span>Active</span>
+
+                    {% if user_account.is_active %}
+                        <strong class="yes">Yes</strong>
+                    {% else %}
+                        <strong>No</strong>
+                    {% endif %}
+                </div>
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</div>
+
+<!-- EDIT USER MODAL -->
+
+<div class="admin-modal" id="editUserModal">
+
+    <div
+        class="admin-modal-overlay"
+        onclick="document.getElementById('editUserModal').classList.remove('show')"
+    ></div>
+
+    <div class="admin-modal-box">
+
+        <div class="admin-modal-header">
+
+            <div>
+                <span>USER MANAGEMENT</span>
+                <h2>Edit User</h2>
+            </div>
+
+            <button
+                type="button"
+                class="admin-modal-close"
+                onclick="document.getElementById('editUserModal').classList.remove('show')"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="action"
+                value="edit_user"
+            >
+
+            <div class="admin-form-grid">
+
+                <div class="admin-form-group">
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="{{ user_account.username }}"
+                        required
+                    >
+                </div>
+
+
+                <div class="admin-form-group">
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ user_account.email }}"
+                    >
+                </div>
+
+
+                <div class="admin-form-group">
+                    <label for="first_name">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value="{{ user_account.first_name }}"
+                    >
+                </div>
+
+
+                <div class="admin-form-group">
+                    <label for="last_name">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        value="{{ user_account.last_name }}"
+                    >
+                </div>
+
+
+                <div class="admin-form-group admin-form-full">
+                    <label for="location">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        value="{{ user_account.student_profile.location }}"
+                        placeholder="e.g. Lagos, Nigeria"
+                    >
+                </div>
+
+
+                <div class="admin-form-group admin-form-full">
+                    <label for="bio">
+                        Bio
+                    </label>
+
+                    <textarea
+                        id="bio"
+                        name="bio"
+                        rows="4"
+                        placeholder="Student bio..."
+                    >{{ user_account.student_profile.bio }}</textarea>
+                </div>
+
+            </div>
+
+            <div class="admin-modal-footer">
+
+                <button
+                    type="button"
+                    class="modal-cancel-button"
+                    onclick="document.getElementById('editUserModal').classList.remove('show')"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-save-button"
+                >
+                    <i class="fa-solid fa-check"></i>
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+        
+
+    </div>
+
+</div>
+
+{% endblock %}
