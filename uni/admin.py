@@ -26,3 +26,5 @@ class UniversityAdmin(admin.ModelAdmin):
         "state",
         "city",
     )
+    
+    readonly_fields = ("slug",)

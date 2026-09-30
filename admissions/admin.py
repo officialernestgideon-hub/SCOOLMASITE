@@ -27,3 +27,4 @@ class AdmissionUpdateAdmin(admin.ModelAdmin):
         "content",
         "university__name",
     )
+    readonly_fields = ("slug",)

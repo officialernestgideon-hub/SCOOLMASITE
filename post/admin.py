@@ -36,6 +36,8 @@ class PostAdmin(admin.ModelAdmin):
         "content",
         "author__username",
     )
+    
+    readonly_fields = ("slug",)
 
 
 @admin.register(Like)
