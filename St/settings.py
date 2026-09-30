@@ -57,6 +57,22 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(
         RENDER_EXTERNAL_HOSTNAME
     )
+    
+CSRF_TRUSTED_ORIGINS = [
+    "https://scoolmasite.onrender.com",
+]
+
+extra_csrf_origins = os.environ.get(
+    "CSRF_TRUSTED_ORIGINS",
+    ""
+)
+
+if extra_csrf_origins:
+    CSRF_TRUSTED_ORIGINS.extend(
+        origin.strip()
+        for origin in extra_csrf_origins.split(",")
+        if origin.strip()
+    )
 
 
 # Application definition
@@ -228,5 +244,8 @@ if not DEBUG:
 
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = "same-origin"
+    
+    SESSION_COOKIE_HTTPONLY = True
+    SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
