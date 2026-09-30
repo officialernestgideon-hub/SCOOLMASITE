@@ -21,9 +21,6 @@ from django.urls import include, path
 from accounts import views
 
 urlpatterns = [
-    # TEMPORARY - remove after creating production admin
-    path("setup-production-admin/", views.setup_production_admin, name="setup_production_admin"),
-    
     # Custom admin dashboard
     path("admin/", include("admin_dashboard.urls")),
 
