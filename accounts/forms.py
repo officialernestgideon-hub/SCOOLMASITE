@@ -1,8 +1,8 @@
+
 import os
 
 import resend
 
-from django import forms
 from django.contrib.auth.forms import PasswordResetForm
 from django.template.loader import render_to_string
 
@@ -44,4 +44,11 @@ class ResendPasswordResetForm(PasswordResetForm):
             "html": message.replace("\n", "<br>"),
         }
 
-        resend.Emails.send(params)
+        try:
+            response = resend.Emails.send(params)
+        except Exception as exc:
+            raise RuntimeError(
+                f"Resend email failed: {exc}"
+            ) from exc
+
+        return response
