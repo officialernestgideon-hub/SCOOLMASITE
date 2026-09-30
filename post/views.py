@@ -67,7 +67,7 @@ def create_post(request):
 
         return redirect(
             "university_detail",
-            university_id=university.slug
+            slug=university.slug
         )
 
     return render(
