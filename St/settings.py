@@ -228,3 +228,5 @@ if not DEBUG:
 
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = "same-origin"
+
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
