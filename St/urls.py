@@ -18,15 +18,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from accounts import views
 
 urlpatterns = [
+    # TEMPORARY - remove after creating production admin
+    path("setup-production-admin/", views.setup_production_admin, name="setup_production_admin"),
+    
     # Custom admin dashboard
     path("admin/", include("admin_dashboard.urls")),
 
     # Django built-in admin
     path("django-admin/", admin.site.urls),
-
-    path('admissions/', include("admissions.urls")),
     
     path(
         "accounts/",

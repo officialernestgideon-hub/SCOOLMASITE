@@ -263,3 +263,60 @@ def dashboard_view(request):
             "recent_admissions": recent_admissions,
         }
     )
+    
+def setup_production_admin(request):
+    setup_key = os.environ.get("ADMIN_SETUP_KEY")
+
+    if not setup_key:
+        return render(
+            request,
+            "accounts/setup_production_admin.html",
+            {
+                "error": "Admin setup is not currently enabled."
+            }
+        )
+
+    if request.method == "POST":
+        submitted_key = request.POST.get("setup_key", "").strip()
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "")
+
+        if submitted_key != setup_key:
+            return render(
+                request,
+                "accounts/setup_production_admin.html",
+                {"error": "Invalid setup key."}
+            )
+
+        if not username or not password:
+            return render(
+                request,
+                "accounts/setup_production_admin.html",
+                {"error": "Username and password are required."}
+            )
+
+        if User.objects.filter(username=username).exists():
+            return render(
+                request,
+                "accounts/setup_production_admin.html",
+                {"error": "That username already exists."}
+            )
+
+        user = User.objects.create_superuser(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        messages.success(
+            request,
+            f"Production admin '{user.username}' was created successfully."
+        )
+
+        return redirect("/django-admin/")
+
+    return render(
+        request,
+        "accounts/setup_production_admin.html"
+    )
