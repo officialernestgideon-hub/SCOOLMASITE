@@ -1,0 +1,529 @@
+/* =========================================================
+   ANALYTICS
+   SCOOLMASITE ADMIN
+========================================================= */
+
+.analytics-content {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 24px 30px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.analytics-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 22px;
+    margin: 30px;
+}
+
+.analytics-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+    padding: 22px;
+    border: 1px solid #e9e3ee;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(36, 17, 63, 0.04);
+}
+
+.analytics-card::after {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    right: -30px;
+    bottom: -35px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.analytics-card.purple {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #7048a8,
+        #4d2d76
+    );
+    border-color: transparent;
+}
+
+.analytics-card.brown {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #8b5e3c,
+        #69432d
+    );
+    border-color: transparent;
+}
+
+.analytics-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: #eee7f8;
+    color: #7048a8;
+}
+
+.analytics-card.purple .analytics-icon,
+.analytics-card.brown .analytics-icon {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+}
+
+.analytics-card span {
+    display: block;
+    color: #81788d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.analytics-card.purple span,
+.analytics-card.brown span {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.analytics-card strong {
+    display: block;
+    margin: 5px 0;
+    color: #24113f;
+    font-size: 30px;
+    line-height: 1.1;
+}
+
+.analytics-card.purple strong,
+.analytics-card.brown strong {
+    color: #ffffff;
+}
+
+.analytics-card small {
+    color: #99909f;
+    font-size: 11px;
+}
+
+.analytics-card.purple small,
+.analytics-card.brown small {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.analytics-section,
+.content-analytics {
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid #e9e3ee;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(36, 17, 63, 0.04);
+}
+
+.analytics-section.large {
+    margin-bottom: 22px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.section-heading > div:first-child span {
+    display: block;
+    color: #8b5e3c;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.section-heading h2 {
+    margin: 4px 0 0;
+    color: #24113f;
+    font-size: 21px;
+    line-height: 1.25;
+}
+
+.section-heading-icon {
+    color: #7048a8;
+    font-size: 18px;
+}
+
+.section-summary {
+    padding: 8px 12px;
+    border-radius: 9px;
+    background: #f3eef7;
+    color: #7048a8;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CHART CONTAINERS
+========================================================= */
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 330px;
+}
+
+.chart-container.small {
+    height: 280px;
+}
+
+
+/* =========================================================
+   POPULAR PAGES + TRAFFIC SOURCES
+========================================================= */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.traffic-overview-grid {
+    align-items: stretch;
+}
+
+.traffic-source-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.traffic-chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    flex: 1;
+    min-height: 280px;
+}
+
+.traffic-source-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.traffic-source-summary > div {
+    padding: 14px;
+    border-radius: 12px;
+    background: #f8f5fa;
+}
+
+.traffic-source-summary strong {
+    display: block;
+    color: #24113f;
+    font-size: 20px;
+}
+
+.traffic-source-summary span {
+    display: block;
+    margin-top: 3px;
+    color: #81788d;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   USER GROWTH
+   STANDS ALONE
+========================================================= */
+
+.user-growth-section {
+    margin-bottom: 22px;
+}
+
+.user-growth-chart {
+    position: relative;
+    width: 100%;
+    height: 340px;
+}
+
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+.analytics-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid #f0edf2;
+}
+
+.list-row:last-child {
+    border-bottom: 0;
+}
+
+.row-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #eee7f8;
+    color: #7048a8;
+}
+
+.brown-icon {
+    background: #f1e8e2;
+    color: #8b5e3c;
+}
+
+.purple-icon {
+    background: #eee7f8;
+    color: #7048a8;
+}
+
+.row-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.row-content strong {
+    display: block;
+    overflow: hidden;
+    color: #29212f;
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.row-content span {
+    display: block;
+    margin-top: 3px;
+    color: #999;
+    font-size: 11px;
+}
+
+.list-row > b {
+    flex-shrink: 0;
+    color: #3b1d68;
+    font-size: 14px;
+}
+
+.analytics-empty {
+    padding: 28px 5px;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DEVICES + OPERATING SYSTEMS
+========================================================= */
+
+.device-os-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   TECHNOLOGY GRID
+========================================================= */
+
+.technology-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   CONTENT ANALYTICS
+========================================================= */
+
+.content-analytics {
+    margin-bottom: 30px;
+}
+
+.content-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.content-stats > div {
+    padding: 20px;
+    border-radius: 14px;
+    background: #f8f5fa;
+}
+
+.content-stats span,
+.content-stats small {
+    display: block;
+    color: #777;
+}
+
+.content-stats strong {
+    display: block;
+    margin: 7px 0;
+    color: #24113f;
+    font-size: 28px;
+}
+
+.content-stats small {
+    font-size: 11px;
+}
+
+.popular-posts {
+    padding-top: 22px;
+    border-top: 1px solid #eee;
+}
+
+.popular-posts h3 {
+    margin: 0 0 12px;
+    color: #24113f;
+}
+
+.post-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.post-row strong,
+.post-row span {
+    display: block;
+}
+
+.post-row strong {
+    color: #332a3b;
+    font-size: 13px;
+}
+
+.post-row span {
+    margin-top: 4px;
+    color: #999;
+    font-size: 11px;
+}
+
+.post-row b {
+    color: #7048a8;
+    white-space: nowrap;
+}
+
+.post-row small {
+    color: #999;
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .analytics-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .analytics-grid,
+    .device-os-grid,
+    .technology-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .user-growth-chart {
+        height: 300px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .analytics-content {
+        padding: 0 14px 24px;
+    }
+
+    .analytics-metrics {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .analytics-section,
+    .content-analytics {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .section-heading h2 {
+        font-size: 18px;
+    }
+
+    .section-summary {
+        display: none;
+    }
+
+    .chart-container,
+    .user-growth-chart {
+        height: 250px;
+    }
+
+    .traffic-chart-container {
+        height: 250px;
+        min-height: 250px;
+    }
+
+    .traffic-source-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .post-row {
+        align-items: flex-start;
+    }
+
+}

@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,42 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-smkivd5s@u8jg4=0ag2n@#25^qc(!(wf+%b%p1l9@lbjao1*77'
+# SECRET_KEY = 'django-insecure-smkivd5s@u8jg4=0ag2n@#25^qc(!(wf+%b%p1l9@lbjao1*77'
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-development-only-secret-key"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get(
+    "DEBUG",
+    "True"
+).lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
+
+CSRF_TRUSTED_ORIGINS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get(
+    "RENDER_EXTERNAL_HOSTNAME"
+)
+
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(
+        f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    )
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get(
+    "RENDER_EXTERNAL_HOSTNAME"
+)
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(
+        RENDER_EXTERNAL_HOSTNAME
+    )
 
 
 # Application definition
@@ -37,6 +68,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    "cloudinary",
+    "cloudinary_storage",
     
     'uni',
     'accounts',
@@ -50,10 +84,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
-    
+
     "admin_dashboard.middleware.SiteVisitMiddleware",
-     
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,10 +124,10 @@ WSGI_APPLICATION = 'St.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
 }
 
 
@@ -128,14 +165,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
 
-
-STATICFILES_DIRS =[
-    BASE_DIR / 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
 ]
 
-MEDIA_URL = '/media/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+if not DEBUG:
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
@@ -143,4 +191,40 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+if DEBUG:
+
+    EMAIL_BACKEND = (
+        "django.core.mail.backends.console.EmailBackend"
+    )
+
+else:
+
+    EMAIL_BACKEND = (
+        "django.core.mail.backends.smtp.EmailBackend"
+    )
+
+    EMAIL_HOST = "smtp.resend.com"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = "resend"
+    EMAIL_HOST_PASSWORD = os.environ.get(
+        "RESEND_API_KEY"
+    )
+
+    DEFAULT_FROM_EMAIL = os.environ.get(
+        "DEFAULT_FROM_EMAIL"
+    )
+    
+if not DEBUG:
+
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_SSL_REDIRECT = True
+
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"

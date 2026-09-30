@@ -67,7 +67,7 @@ def create_post(request):
 
         return redirect(
             "university_detail",
-            university_id=university.id
+            university_id=university.slug
         )
 
     return render(
@@ -177,7 +177,7 @@ def like_post(request, post_id):
 
     return redirect(
         "post_detail",
-        post_id=post.id
+        post_id=post.slug
     )
 
 
@@ -206,7 +206,7 @@ def add_comment(request, post_id):
 
             return redirect(
                 "post_detail",
-                post_id=post.id
+                post_id=post.slug
             )
 
         Comment.objects.create(
@@ -217,5 +217,5 @@ def add_comment(request, post_id):
 
     return redirect(
         "post_detail",
-        post_id=post.id
+        post_id=post.slug
     )

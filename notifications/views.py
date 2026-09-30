@@ -42,7 +42,7 @@ def mark_notification_read(request, notification_id):
     if notification.admission_update:
         return redirect(
             "admission_detail",
-            admission_id=notification.admission_update.id
+            admission_id=notification.admission_update.slug
         )
 
     return redirect("notification_list")

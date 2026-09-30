@@ -1,0 +1,445 @@
+.admission-page {
+background: var(--surface);
+min-height: calc(100vh - 80px);
+padding: 42px 20px 70px;
+}
+
+.admission-container {
+width: min(100%, 980px);
+margin: 0 auto;
+}
+
+/* BACK LINK */
+
+.admission-back {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+color: var(--muted);
+text-decoration: none;
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 22px;
+transition: color 0.2s ease;
+}
+
+.admission-back {
+color: var(--purple);
+}
+
+/* UNIVERSITY HEADER */
+
+.admission-university {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+background: var(--white);
+border: 1px solid var(--border);
+border-radius: var(--radius-lg);
+padding: 20px 22px;
+box-shadow: var(--shadow-sm);
+margin-bottom: 28px;
+}
+
+.university-brand {
+display: flex;
+align-items: center;
+gap: 15px;
+min-width: 0;
+}
+
+.university-logo {
+width: 64px;
+height: 64px;
+flex: 0 0 64px;
+object-fit: cover;
+border-radius: 16px;
+border: 1px solid var(--border);
+background: var(--purple-soft);
+}
+
+.university-logo-placeholder {
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--purple);
+font-size: 22px;
+}
+
+.university-details {
+min-width: 0;
+}
+
+.section-label {
+display: block;
+color: var(--purple);
+font-size: 12px;
+font-weight: 800;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-bottom: 5px;
+}
+
+.university-details h2 {
+color: var(--ink);
+font-size: 19px;
+line-height: 1.3;
+margin: 0 0 5px;
+}
+
+.university-details p {
+display: flex;
+align-items: center;
+gap: 6px;
+color: var(--muted);
+font-size: 13px;
+margin: 0;
+}
+
+.verified-badge {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+flex-shrink: 0;
+background: #ecfdf5;
+color: var(--success);
+border: 1px solid #c9f0df;
+border-radius: 999px;
+padding: 8px 12px;
+font-size: 12px;
+font-weight: 800;
+}
+
+/* HEADING */
+
+.admission-heading {
+background: linear-gradient(
+135deg,
+var(--purple-dark),
+var(--purple)
+);
+color: var(--white);
+border-radius: var(--radius-lg);
+padding: 42px;
+margin-bottom: 22px;
+box-shadow: var(--shadow-md);
+}
+
+.admission-eyebrow {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+font-size: 13px;
+font-weight: 700;
+opacity: 0.9;
+margin-bottom: 14px;
+}
+
+.admission-heading h1 {
+max-width: 800px;
+font-size: clamp(30px, 5vw, 46px);
+line-height: 1.12;
+letter-spacing: -0.025em;
+margin: 0;
+}
+
+.published-date {
+color: rgba(255, 255, 255, 0.76);
+font-size: 14px;
+margin: 17px 0 0;
+}
+
+/* INFORMATION CARDS */
+
+.admission-info {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 14px;
+margin-bottom: 22px;
+}
+
+.info-card {
+display: flex;
+align-items: center;
+gap: 13px;
+background: var(--white);
+border: 1px solid var(--border);
+border-radius: var(--radius-md);
+padding: 18px;
+box-shadow: var(--shadow-sm);
+}
+
+.info-icon {
+width: 42px;
+height: 42px;
+flex: 0 0 42px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(--purple-soft);
+color: var(--purple);
+border-radius: 12px;
+}
+
+.info-card span {
+display: block;
+color: var(--muted);
+font-size: 11px;
+font-weight: 700;
+margin-bottom: 5px;
+}
+
+.info-card strong {
+display: block;
+color: var(--ink);
+font-size: 14px;
+line-height: 1.35;
+}
+
+.deadline-card .info-icon {
+background: #fff4e8;
+color: #c46a16;
+}
+
+/* CONTENT */
+
+.admission-content {
+background: var(--white);
+border: 1px solid var(--border);
+border-radius: var(--radius-lg);
+box-shadow: var(--shadow-sm);
+overflow: hidden;
+margin-bottom: 22px;
+}
+
+.content-header {
+display: flex;
+align-items: center;
+gap: 13px;
+padding: 25px 28px;
+border-bottom: 1px solid var(--border);
+}
+
+.content-icon {
+width: 42px;
+height: 42px;
+flex: 0 0 42px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(--purple-soft);
+color: var(--purple);
+border-radius: 12px;
+}
+
+.content-header h2 {
+color: var(--ink);
+font-size: 20px;
+margin: 0;
+}
+
+.content-body {
+color: #403a4b;
+font-size: 16px;
+line-height: 1.85;
+padding: 28px;
+}
+
+.content-body p {
+margin: 0 0 18px;
+}
+
+.content-body p {
+margin-bottom: 0;
+}
+
+/* OFFICIAL APPLICATION */
+
+.official-application {
+display: flex;
+align-items: flex-start;
+gap: 18px;
+background: var(--purple-soft);
+border: 1px solid #e1d4ff;
+border-radius: var(--radius-lg);
+padding: 28px;
+margin-bottom: 22px;
+}
+
+.official-icon {
+width: 48px;
+height: 48px;
+flex: 0 0 48px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(--purple);
+color: var(--white);
+border-radius: 14px;
+font-size: 19px;
+}
+
+.official-content h2 {
+color: var(--ink);
+font-size: 21px;
+margin: 0 0 8px;
+}
+
+.official-content p {
+max-width: 680px;
+color: var(--muted);
+font-size: 14px;
+line-height: 1.7;
+margin: 0 0 18px;
+}
+
+.official-button {
+display: inline-flex;
+align-items: center;
+gap: 9px;
+background: var(--purple);
+color: var(--white);
+text-decoration: none;
+border-radius: 11px;
+padding: 12px 17px;
+font-size: 13px;
+font-weight: 700;
+transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.official-button {
+background: var(--purple-dark);
+transform: translateY(-1px);
+}
+
+/* UNIVERSITY ACTION */
+
+.admission-actions {
+display: flex;
+justify-content: center;
+padding-top: 4px;
+}
+
+.university-button {
+display: inline-flex;
+align-items: center;
+gap: 9px;
+background: var(--white);
+color: var(--purple);
+border: 1px solid #d9cdf4;
+border-radius: 12px;
+padding: 13px 18px;
+text-decoration: none;
+font-size: 14px;
+font-weight: 700;
+transition: 0.2s ease;
+}
+
+.university-button {
+background: var(--purple-soft);
+border-color: var(--purple);
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+
+.admission-page {
+    padding: 32px 18px 55px;
+}
+
+.admission-info {
+    grid-template-columns: 1fr;
+}
+
+.admission-heading {
+    padding: 34px;
+}
+
+.admission-heading h1 {
+    font-size: 36px;
+}
+
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+.admission-page {
+    padding: 24px 14px 45px;
+}
+
+.admission-back {
+    margin-bottom: 17px;
+}
+
+.admission-university {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 17px;
+    margin-bottom: 18px;
+}
+
+.university-logo {
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
+}
+
+.university-details h2 {
+    font-size: 17px;
+}
+
+.admission-heading {
+    padding: 27px 22px;
+    border-radius: 19px;
+    margin-bottom: 16px;
+}
+
+.admission-heading h1 {
+    font-size: 29px;
+}
+
+.published-date {
+    font-size: 13px;
+}
+
+.info-card {
+    padding: 15px;
+}
+
+.content-header {
+    padding: 21px;
+}
+
+.content-body {
+    padding: 21px;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.official-application {
+    flex-direction: column;
+    padding: 22px;
+    gap: 13px;
+}
+
+.official-content h2 {
+    font-size: 19px;
+}
+
+.official-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.university-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+}
