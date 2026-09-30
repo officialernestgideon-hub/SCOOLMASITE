@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+
+<style> 
+    .about-page { 
+        padding: 60px 20px 80px; 
+    } 
+    .about-container { 
+        max-width: 1100px; 
+        margin: 0 auto; 
+    } 
+    .about-hero { background: linear-gradient(135deg, rgba(91, 45, 145, 0.96), rgba(52, 25, 91, 0.94)), url("{% static 'media/backgroun uni.jpg' %}") center/cover; border-radius: 24px; padding: 70px 40px; color: #fff; text-align: center; margin-bottom: 45px; } 
+    .about-hero .eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; opacity: .85; } 
+    .about-hero h1 { margin: 0 auto 18px; max-width: 760px; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; } .about-hero p { max-width: 720px; margin: 0 auto; font-size: 17px; line-height: 1.8; opacity: .92; } 
+    .about-section { margin-bottom: 45px; } .about-section h2 { font-size: 28px; margin-bottom: 14px; } .about-section p { color: #666; font-size: 16px; line-height: 1.85; margin-bottom: 15px; } 
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 25px; } .about-card { padding: 28px; border-radius: 18px; background: #fff; border: 1px solid rgba(0, 0, 0, .07); box-shadow: 0 12px 35px rgba(0, 0, 0, .06); } 
+    .about-card-icon { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: rgba(91, 45, 145, .1); color: #5b2d91; font-size: 21px; margin-bottom: 18px; } 
+    .about-card h3 { margin: 0 0 10px; font-size: 19px; } .about-card p { margin: 0; font-size: 14px; line-height: 1.7; } .about-cta { margin-top: 50px; padding: 38px; border-radius: 20px; background: #f7f3fb; text-align: center; } 
+    .about-cta h2 { margin-bottom: 10px; } .about-cta p { max-width: 650px; margin: 0 auto 22px; color: #666; line-height: 1.7; } .about-cta a { display: inline-flex; align-items: center; gap: 9px; padding: 13px 22px; border-radius: 10px; background: #5b2d91; color: #fff; text-decoration: none; font-weight: 700; } 
+    @media (max-width: 800px) { 
+        .about-grid { grid-template-columns: 1fr; } 
+        .about-hero { padding: 55px 25px; } 
+    } 
+    @media (max-width: 500px) { 
+        .about-page { padding: 35px 15px 60px; } 
+        .about-hero { border-radius: 18px; padding: 45px 20px; } 
+        .about-hero p { font-size: 15px; } 
+        .about-section h2 { font-size: 24px; } } 
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="about-page"> <div class="about-container">
+
+    <div class="about-hero">
+        <span class="eyebrow">About SCOOLMASITE</span>
+
+        <h1>
+            Helping students discover,
+            connect and move forward.
+        </h1>
+
+        <p>
+            SCOOLMASITE brings university discovery, student experiences
+            and admission information together in one platform built
+            for students and future students.
+        </p>
+    </div>
+
+    <div class="about-section">
+        <h2>What is SCOOLMASITE?</h2>
+
+        <p>
+            SCOOLMASITE is a student-focused platform designed to make it
+            easier to discover universities, follow important admission
+            updates and learn from real student experiences.
+        </p>
+
+        <p>
+            Instead of searching through different places for university
+            information, admission updates and campus experiences,
+            students can find useful information in one growing community.
+        </p>
+    </div>
+
+    <div class="about-section">
+        <h2>What you can do on SCOOLMASITE</h2>
+
+        <div class="about-grid">
+
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+
+                <h3>Discover Universities</h3>
+
+                <p>
+                    Explore universities, learn about their profiles and
+                    discover institutions that may fit your academic goals.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+                <h3>Follow Admission Updates</h3>
+
+                <p>
+                    Follow universities and stay informed about important
+                    admission announcements and application updates.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <h3>Learn From Students</h3>
+
+                <p>
+                    Discover posts, campus experiences and useful insights
+                    shared by members of the student community.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="about-section">
+        <h2>Our goal</h2>
+
+        <p>
+            Our goal is to make useful student and university information
+            easier to discover while creating a platform where students
+            can learn from one another.
+        </p>
+
+        <p>
+            Whether you are preparing for university admission, currently
+            studying or looking for information about a university,
+            SCOOLMASITE is being built to help you make informed decisions
+            about your academic journey.
+        </p>
+    </div>
+
+    <div class="about-cta">
+        <h2>Ready to explore?</h2>
+
+        <p>
+            Start discovering universities and admission information
+            on SCOOLMASITE.
+        </p>
+
+        <a href="{% url 'university_list' %}">
+            Explore Universities
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+</div>
+
+</section> {% endblock %}

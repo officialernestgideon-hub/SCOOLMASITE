@@ -47,6 +47,19 @@ def home(request):
         }
     )
 
+def about(request):
+    return render(
+        request,
+        "about.html"
+    )
+
+
+def contact(request):
+    return render(
+        request,
+        "contact.html"
+    )
+
 
 def university_list(request):
 
@@ -69,11 +82,11 @@ def university_list(request):
     )
 
 
-def university_detail(request, university_id):
+def university_detail(request, slug):
 
     university = get_object_or_404(
         University,
-        id=university_id
+        slug=slug
     )
 
     posts = university.posts.filter(
@@ -118,5 +131,3 @@ def university_detail(request, university_id):
             "follower_count": follower_count,
         }
     )
-    
-    

@@ -11,7 +11,7 @@ urlpatterns = [
     ),
     
     path(
-        "<int:post_id>/",
+        "<slug:slug>/",
         views.post_detail,
         name="post_detail"
     ),

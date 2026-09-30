@@ -78,12 +78,12 @@ def create_post(request):
             "categories": categories,
         }
     )
-    
-def post_detail(request, post_id):
+
+def post_detail(request, slug):
 
     post = get_object_or_404(
         Post,
-        id=post_id,
+        slug=slug,
         is_published=True
     )
 

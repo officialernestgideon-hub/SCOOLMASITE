@@ -26,7 +26,7 @@ urlpatterns = [
     # Django built-in admin
     path("django-admin/", admin.site.urls),
 
-    path('', include("admissions.urls")),
+    path('admissions/', include("admissions.urls")),
     
     path(
         "accounts/",

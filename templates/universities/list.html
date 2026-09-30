@@ -141,7 +141,7 @@ Universities
             {% for university in universities %}
 
                 <a
-                    href="{% url 'university_detail' university.id %}"
+                    href="{% url 'university_detail' university.slug %}"
                     class="directory-card-link"
                 >
 

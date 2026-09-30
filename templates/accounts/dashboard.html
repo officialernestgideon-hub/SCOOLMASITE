@@ -149,7 +149,7 @@ Dashboard
 
 
                         <a
-                            href="{% url 'university_detail' university.id %}"
+                            href="{% url 'university_detail' university.slug %}"
                             class="dashboard-card-link"
                         >
                             View university
@@ -288,7 +288,7 @@ Dashboard
                         <div class="admission-card-actions">
 
                             <a
-                                href="{% url 'admission_detail' admission.id %}"
+                                href="{% url 'admission_detail' admission.slug %}"
                                 class="secondary-button"
                             >
                                 Read update
@@ -371,7 +371,7 @@ Dashboard
                         {% if post.image %}
 
                             <a
-                                href="{% url 'post_detail' post.id %}"
+                                href="{% url 'post_detail' post.slug %}"
                                 class="dashboard-post-image"
                             >
                                 <img
@@ -383,7 +383,7 @@ Dashboard
                         {% else %}
 
                             <a
-                                href="{% url 'post_detail' post.id %}"
+                                href="{% url 'post_detail' post.slug %}"
                                 class="dashboard-post-image post-image-placeholder"
                             >
                                 <i class="fa-solid fa-camera"></i>
@@ -413,7 +413,7 @@ Dashboard
 
                             <h3>
                                 <a
-                                    href="{% url 'post_detail' post.id %}"
+                                    href="{% url 'post_detail' post.slug %}"
                                 >
                                     {{ post.title }}
                                 </a>
@@ -446,7 +446,7 @@ Dashboard
 
 
                             <a
-                                href="{% url 'post_detail' post.id %}"
+                                href="{% url 'post_detail' post.slug %}"
                                 class="read-post-link"
                             >
                                 Read post

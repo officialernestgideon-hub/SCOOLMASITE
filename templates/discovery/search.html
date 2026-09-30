@@ -245,7 +245,7 @@ Search
                         {% for university in universities %}
 
                             <a
-                                href="{% url 'university_detail' university.id %}"
+                                href="{% url 'university_detail' university.slug %}"
                                 class="search-university-card"
                             >
 
@@ -380,7 +380,7 @@ Search
                         {% for admission in admissions %}
 
                             <a
-                                href="{% url 'admission_detail' admission.id %}"
+                                href="{% url 'admission_detail' admission.slug %}"
                                 class="search-admission-card"
                             >
 
@@ -533,7 +533,7 @@ Search
             {% for post in student_posts %}
 
                 <a
-                    href="{% url 'post_detail' post.id %}"
+                    href="{% url 'post_detail' post.slug %}"
                     class="search-post-card"
                 >
 

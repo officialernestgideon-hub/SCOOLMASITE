@@ -4,6 +4,19 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
+    
+    path(
+        "about/",
+        views.about,
+        name="about"
+    ),
+
+    path(
+        "contact/",
+        views.contact,
+        name="contact"
+    ),
+
 
     path(
         "universities/",
@@ -12,7 +25,7 @@ urlpatterns = [
     ),
 
     path(
-        "universities/<int:university_id>/",
+        "universities/<slug:slug>/",
         views.university_detail,
         name="university_detail"
     ),

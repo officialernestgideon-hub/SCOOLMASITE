@@ -247,7 +247,7 @@
                     {% for admission in admissions %}
 
                         <a
-                            href="{% url 'admission_detail' admission.id %}"
+                            href="{% url 'admission_detail' admission.slug %}"
                             class="admission-card-link"
                         >
 
@@ -397,7 +397,7 @@
                     {% for post in posts %}
 
                         <a
-                            href="{% url 'post_detail' post.id %}"
+                            href="{% url 'post_detail' post.slug %}"
                             class="university-post-link"
                         >
 
