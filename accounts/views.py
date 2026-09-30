@@ -9,6 +9,8 @@ from uni.models import University
 from post.models import Post
 from admissions.models import AdmissionUpdate
 
+import os
+
 def register_view(request):
 
     if request.user.is_authenticated:
