@@ -20,6 +20,9 @@ from django.contrib import admin
 from django.urls import include, path
 from accounts import views
 
+handler404 = "St.views.custom_404"
+handler500 = "St.views.custom_500"
+
 urlpatterns = [
     # Custom admin dashboard
     path("admin/", include("admin_dashboard.urls")),
