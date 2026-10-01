@@ -45,10 +45,8 @@ class ResendPasswordResetForm(PasswordResetForm):
         }
 
         try:
-            response = resend.Emails.send(params)
+            resend.Emails.send(params)
         except Exception as exc:
             raise RuntimeError(
                 f"Resend email failed: {exc}"
             ) from exc
-
-        return response
