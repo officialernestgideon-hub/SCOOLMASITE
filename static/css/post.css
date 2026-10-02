@@ -901,6 +901,9 @@ MOBILE
     padding: 20px;
     border-radius: 15px;
 }
+.comment-avatar {
+    display: none;
+}
 
 .comment-submit-row {
     align-items: stretch;
