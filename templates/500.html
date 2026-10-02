@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+
+<style>
+    .error-page {
+        min-height: 70vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 60px 20px;
+    }
+
+    .error-container {
+        width: 100%;
+        max-width: 650px;
+
+        text-align: center;
+    }
+
+    .error-icon {
+        width: 80px;
+        height: 80px;
+
+        margin: 0 auto 24px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: rgba(112, 72, 168, 0.10);
+
+        color: var(--purple);
+
+        font-size: 30px;
+    }
+
+    .error-code {
+        margin: 0 0 8px;
+
+        color: var(--purple);
+
+        font-size: clamp(58px, 12vw, 100px);
+        font-weight: 800;
+
+        line-height: 1;
+    }
+
+    .error-container h1 {
+        margin: 0 0 14px;
+
+        color: var(--purple-deep);
+
+        font-size: clamp(24px, 5vw, 36px);
+    }
+
+    .error-container p {
+        max-width: 520px;
+
+        margin: 0 auto 30px;
+
+        color: var(--muted);
+
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .error-actions {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+    }
+
+    .error-button {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 8px;
+
+        padding: 12px 18px;
+
+        border-radius: 9px;
+
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .error-button.primary {
+        background: var(--purple);
+
+        color: white;
+
+        box-shadow:
+            0 6px 18px rgba(112, 72, 168, 0.20);
+    }
+
+    .error-button.secondary {
+        background: var(--surface);
+
+        color: var(--purple-deep);
+
+        border: 1px solid rgba(112, 72, 168, 0.12);
+    }
+
+    .error-button:hover {
+        transform: translateY(-2px);
+    }
+
+    .error-button.primary:hover {
+        box-shadow:
+            0 9px 22px rgba(112, 72, 168, 0.26);
+    }
+
+    @media (max-width: 600px) {
+
+        .error-page {
+            padding: 45px 18px;
+        }
+
+        .error-actions {
+            flex-direction: column;
+        }
+
+        .error-button {
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="error-page">
+
+    <div class="error-container">
+
+        <div class="error-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div class="error-code">
+            500
+        </div>
+
+        <h1>
+            Something went wrong
+        </h1>
+
+        <p>
+            We ran into an unexpected problem while processing
+            your request. Please try again in a moment.
+        </p>
+
+        <div class="error-actions">
+
+            <a
+                href="{% url 'home' %}"
+                class="error-button primary"
+            >
+                <i class="fa-solid fa-house"></i>
+                Back to Home
+            </a>
+
+            <a
+                href="javascript:location.reload()"
+                class="error-button secondary"
+            >
+                <i class="fa-solid fa-rotate-right"></i>
+                Try Again
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
