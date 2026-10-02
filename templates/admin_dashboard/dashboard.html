@@ -157,8 +157,7 @@ Dashboard
                             <h2>Website Activity</h2>
 
                             <p>
-                                Visitor activity will appear here once
-                                tracking is connected.
+                                Unique visitors across the selected period.
                             </p>
 
                         </div>
@@ -166,17 +165,29 @@ Dashboard
 
                         <div class="chart-controls">
 
-                            <button class="chart-period active">
-                                7D
-                            </button>
+                            <div class="chart-controls">
 
-                            <button class="chart-period">
-                                30D
-                            </button>
+                                <a
+                                    href="?period=7d"
+                                    class="chart-period {% if visitor_period == '7d' %}active{% endif %}"
+                                >
+                                    7D
+                                </a>
 
-                            <button class="chart-period">
-                                3M
-                            </button>
+                                <a
+                                    href="?period=30d"
+                                    class="chart-period {% if visitor_period == '30d' %}active{% endif %}"
+                                >
+                                    30D
+                                </a>
+
+                                <a
+                                    href="?period=3m"
+                                    class="chart-period {% if visitor_period == '3m' %}active{% endif %}"
+                                >
+                                    3M
+                                </a>
+                            </div>
 
                         </div>
 
@@ -209,13 +220,25 @@ Dashboard
 
                             <div class="chart-column">
 
-                                <div
-                                    class="chart-bar"
-                                    style="height: {% widthratio item.visitors 1 20 %}px;"
-                                    title="{{ item.visitors }} visitors"
-                                ></div>
+                                <div class="chart-bar-wrapper">
 
-                                <span>{{ item.date }}</span>
+                                    <div
+                                        class="chart-bar"
+                                        style="height: {{ item.height }}%;"
+                                        title="{{ item.visitors }} visitors"
+                                    >
+                                        {% if item.visitors > 0 %}
+                                            <span class="chart-value">
+                                                {{ item.visitors }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                                <span class="chart-label">
+                                    {{ item.date }}
+                                </span>
 
                             </div>
 

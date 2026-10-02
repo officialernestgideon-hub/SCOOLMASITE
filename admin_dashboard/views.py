@@ -51,29 +51,168 @@ def dashboard(request):
         .annotate(
             visit_count=Count("id")
         )
-        .filter(visit_count__gt=1)
+        .filter(
+            visit_count__gt=1
+        )
         .count()
     )
 
-    # Last 7 days
-    seven_days_ago = now - timedelta(days=6)
+
+    # -----------------------------
+    # VISITOR CHART PERIOD
+    # -----------------------------
+
+    visitor_period = request.GET.get(
+        "period",
+        "7d"
+    ).lower()
+
+    if visitor_period not in ["7d", "30d", "3m"]:
+        visitor_period = "7d"
+
 
     visitor_trend = []
 
-    for i in range(7):
-        day = (seven_days_ago + timedelta(days=i)).date()
 
-        visits = SiteVisit.objects.filter(
-            created_at__date=day
+    # -----------------------------
+    # 7 DAYS
+    # -----------------------------
+
+    if visitor_period == "7d":
+
+        start_date = today - timedelta(days=6)
+
+        for i in range(7):
+
+            day = start_date + timedelta(days=i)
+
+            visits = SiteVisit.objects.filter(
+                created_at__date=day
+            )
+
+            visitor_count = (
+                visits
+                .values("session_key")
+                .distinct()
+                .count()
+            )
+
+            visitor_trend.append({
+                "date": day.strftime("%a"),
+                "visitors": visitor_count,
+                "page_views": visits.count(),
+            })
+
+
+    # -----------------------------
+    # 30 DAYS
+    # -----------------------------
+
+    elif visitor_period == "30d":
+
+        start_date = today - timedelta(days=29)
+
+        for i in range(30):
+
+            day = start_date + timedelta(days=i)
+
+            visits = SiteVisit.objects.filter(
+                created_at__date=day
+            )
+
+            visitor_count = (
+                visits
+                .values("session_key")
+                .distinct()
+                .count()
+            )
+
+            visitor_trend.append({
+                "date": day.strftime("%d %b"),
+                "visitors": visitor_count,
+                "page_views": visits.count(),
+            })
+
+
+    # -----------------------------
+    # 3 MONTHS
+    # -----------------------------
+
+    elif visitor_period == "3m":
+
+        start_date = today - timedelta(days=89)
+
+        current_date = start_date
+
+        while current_date <= today:
+
+            week_end = min(
+                current_date + timedelta(days=6),
+                today
+            )
+
+            visits = SiteVisit.objects.filter(
+                created_at__date__gte=current_date,
+                created_at__date__lte=week_end
+            )
+
+            visitor_count = (
+                visits
+                .values("session_key")
+                .distinct()
+                .count()
+            )
+
+            visitor_trend.append({
+                "date": (
+                    f"{current_date.strftime('%d %b')}"
+                    f" - "
+                    f"{week_end.strftime('%d %b')}"
+                ),
+                "visitors": visitor_count,
+                "page_views": visits.count(),
+            })
+
+            current_date = week_end + timedelta(days=1)
+
+
+    # -----------------------------
+    # SCALE CHART BARS
+    # -----------------------------
+
+    max_visitors = max(
+        (
+            item["visitors"]
+            for item in visitor_trend
+        ),
+        default=0
+    )
+
+    for item in visitor_trend:
+
+        if max_visitors > 0:
+
+            item["height"] = round(
+                (
+                    item["visitors"]
+                    / max_visitors
+                ) * 100
+            )
+
+        else:
+
+            item["height"] = 0
+
+
+    # Popular pages
+    popular_pages = (
+        SiteVisit.objects
+        .values("path")
+        .annotate(
+            total=Count("id")
         )
-
-        visitor_trend.append({
-            "date": day.strftime("%a"),
-            "visitors": visits.values(
-                "session_key"
-            ).distinct().count(),
-            "page_views": visits.count(),
-        })
+        .order_by("-total")[:8]
+    )
 
     # Popular pages
     popular_pages = (
