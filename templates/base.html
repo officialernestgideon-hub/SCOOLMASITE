@@ -69,18 +69,21 @@
 
         <nav class="main-nav">
 
-            <a href="{% url 'home' %}">
-                <i class="fa-solid fa-house"></i>
+            <a href="{% url 'home' %}"
+                class"{% if request.resolver_match.url_name == 'home'%}active{% endif %}">
+                {% comment %} <i class="fa-solid fa-house"></i> {% endcomment %}
                 <span>Home</span>
             </a>
 
-            <a href="{% url 'university_list' %}">
-                <i class="fa-solid fa-building-columns"></i>
+            <a href="{% url 'university_list' %}"
+                class"{% if request.resolver_match.url_name == 'university_list'%}active{% endif %}">
+                {% comment %} <i class="fa-solid fa-building-columns"></i> {% endcomment %}
                 <span>Universities</span>
             </a>
 
-            <a href="{% url 'search' %}">
-                <i class="fa-solid fa-magnifying-glass"></i>
+            <a href="{% url 'search' %}"
+                class"{% if request.resolver_match.url_name == 'search'%}active{% endif %}">
+                {% comment %} <i class="fa-solid fa-magnifying-glass"></i> {% endcomment %}
                 <span>Search</span>
             </a>
 
@@ -89,20 +92,23 @@
                 <span>Opportunites</span>
             </a> {% endcomment %}
 
-            <a href="{% url "contact" %}">
-                <i class="fa-solid fa-phone"></i>
+            <a href="{% url "contact" %}"
+                class"{% if request.resolver_match.url_name == 'contact'%}active{% endif %}">
+                {% comment %} <i class="fa-solid fa-phone"></i> {% endcomment %}
                 <span>Contact</span>
             </a>
 
             {% if user.is_authenticated %}
 
-                <a href="{% url 'dashboard' %}">
-                    <i class="fa-solid fa-chart-line"></i>
+                <a href="{% url 'dashboard' %}"
+                    class"{% if request.resolver_match.url_name == 'dashboard'%}active{% endif %}">
+                    {% comment %} <i class="fa-solid fa-chart-line"></i> {% endcomment %}
                     <span>Dashboard</span>
                 </a>
 
-                <a href="{% url 'notification_list' %}">
-                    <i class="fa-regular fa-bell"></i>
+                <a href="{% url 'notification_list' %}"
+                    class"{% if request.resolver_match.url_name == 'notification_list'%}active{% endif %}">
+                    {% comment %} <i class="fa-regular fa-bell"></i> {% endcomment %}
                     <span>Notifications</span>
 
                     {% if unread_notification_count %}
@@ -112,20 +118,21 @@
                     {% endif %}
                 </a>
 
-                <a href="{% url 'create_post' %}">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                <a href="{% url 'create_post' %}"
+                    class"{% if request.resolver_match.url_name == 'create_post'%}active{% endif %}">
+                    {% comment %} <i class="fa-solid fa-pen-to-square"></i> {% endcomment %}
                     <span>Create Post</span>
                 </a>
 
                 <a href="{% url 'logout' %}">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    {% comment %} <i class="fa-solid fa-arrow-right-from-bracket"></i> {% endcomment %}
                     <span>Logout</span>
                 </a>
 
             {% else %}
 
                 <a href="{% url 'login' %}">
-                    <i class="fa-solid fa-right-to-bracket"></i>
+                    {% comment %} <i class="fa-solid fa-right-to-bracket"></i> {% endcomment %}
                     <span>Login</span>
                 </a>
 

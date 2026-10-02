@@ -195,7 +195,7 @@ def follow_university(request, university_id):
 
     return redirect(
         "university_detail",
-        university_id=university.slug
+        slug=university.slug
     )
 
 
@@ -224,7 +224,7 @@ def unfollow_university(request, university_id):
 
     return redirect(
         "university_detail",
-        university_id=university.slug
+        slug=university.slug
     )
 
 @login_required

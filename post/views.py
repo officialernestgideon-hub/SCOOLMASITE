@@ -177,7 +177,7 @@ def like_post(request, post_id):
 
     return redirect(
         "post_detail",
-        post_id=post.slug
+        slug=post.slug
     )
 
 
@@ -217,5 +217,5 @@ def add_comment(request, post_id):
 
     return redirect(
         "post_detail",
-        post_id=post.slug
+        slug=post.slug
     )

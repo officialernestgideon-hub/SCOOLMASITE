@@ -1735,7 +1735,8 @@ body.mobile-menu-open .mobile-menu-overlay {
 @media (max-width: 600px) {
 
     .hero {
-        min-height: 680px;
+        min-height: 400px;
+        
     }
 
     .hero-content {
@@ -1762,7 +1763,7 @@ body.mobile-menu-open .mobile-menu-overlay {
     }
 
     .hero-actions {
-        flex-direction: column;
+        /* flex-direction: column; */
         align-items: stretch;
     }
 
